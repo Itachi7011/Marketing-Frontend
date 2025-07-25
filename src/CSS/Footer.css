@@ -1,0 +1,783 @@
+.ai-marketing-footer {
+  position: relative;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  color: #ffffff;
+  padding: 4rem 0 2rem;
+  margin-top: 3rem;
+  margin-bottom: -3rem;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: all 0.3s ease;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.ai-marketing-footer.light {
+  background: linear-gradient(135deg, #f8faff 0%, #e8f2ff 50%, #d6e8ff 100%);
+  color: #1a1a2e;
+}
+
+.ai-marketing-footer-bg-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ai-marketing-footer-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: linear-gradient(45deg, #00d4ff, #7c3aed);
+  border-radius: 50%;
+  animation: ai-marketing-footer-float 6s ease-in-out infinite;
+}
+
+.ai-marketing-footer-particle-1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.ai-marketing-footer-particle-2 {
+  top: 60%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.ai-marketing-footer-particle-3 {
+  bottom: 30%;
+  left: 70%;
+  animation-delay: 4s;
+}
+
+.ai-marketing-footer-neural-network {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  opacity: 0.1;
+}
+
+.ai-marketing-footer-node {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #00d4ff;
+  border-radius: 50%;
+  animation: ai-marketing-footer-pulse 2s ease-in-out infinite;
+}
+
+.ai-marketing-footer-node-1 {
+  top: 50px;
+  left: 50px;
+}
+.ai-marketing-footer-node-2 {
+  top: 150px;
+  right: 50px;
+  animation-delay: 0.5s;
+}
+.ai-marketing-footer-node-3 {
+  bottom: 50px;
+  left: 100px;
+  animation-delay: 1s;
+}
+
+.ai-marketing-footer-connection {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+  animation: ai-marketing-footer-flow 3s ease-in-out infinite;
+}
+
+.ai-marketing-footer-connection-1 {
+  top: 54px;
+  left: 58px;
+  width: 200px;
+  transform: rotate(45deg);
+}
+
+.ai-marketing-footer-connection-2 {
+  top: 154px;
+  left: 100px;
+  width: 150px;
+  transform: rotate(-45deg);
+}
+
+.ai-marketing-footer-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.ai-marketing-footer-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 4rem;
+  margin-bottom: 4rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-header {
+  border-bottom-color: rgba(26, 26, 46, 0.1);
+}
+
+.ai-marketing-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.ai-marketing-footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ai-marketing-footer-logo-cube {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  transform-style: preserve-3d;
+  animation: ai-marketing-footer-rotate 10s linear infinite;
+}
+
+.ai-marketing-footer-cube-face {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(45deg, #00d4ff, #7c3aed);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ai-marketing-footer-cube-front {
+  transform: rotateY(0deg) translateZ(20px);
+}
+.ai-marketing-footer-cube-back {
+  transform: rotateY(180deg) translateZ(20px);
+}
+.ai-marketing-footer-cube-right {
+  transform: rotateY(90deg) translateZ(20px);
+}
+.ai-marketing-footer-cube-left {
+  transform: rotateY(-90deg) translateZ(20px);
+}
+.ai-marketing-footer-cube-top {
+  transform: rotateX(90deg) translateZ(20px);
+}
+.ai-marketing-footer-cube-bottom {
+  transform: rotateX(-90deg) translateZ(20px);
+}
+
+.ai-marketing-footer-brand-text {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  background: linear-gradient(45deg, #00d4ff, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ai-marketing-footer-tagline {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 500px;
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-tagline {
+  color: rgba(26, 26, 46, 0.8);
+}
+
+.ai-marketing-footer-newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.ai-marketing-footer-newsletter-title {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  margin: 0;
+}
+
+.ai-marketing-footer-newsletter-form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.ai-marketing-footer-email-input {
+  flex: 1;
+  min-width: 250px;
+  padding: 1rem 1.25rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-email-input {
+  background: rgba(255, 255, 255, 0.8);
+  color: #1a1a2e;
+  border-color: rgba(26, 26, 46, 0.1);
+}
+
+.ai-marketing-footer-email-input:focus {
+  outline: none;
+  border-color: #00d4ff;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.ai-marketing-footer-email-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-email-input::placeholder {
+  color: rgba(26, 26, 46, 0.5);
+}
+
+.ai-marketing-footer-subscribe-btn {
+  position: relative;
+  padding: 1rem 2rem;
+  background: linear-gradient(45deg, #00d4ff, #7c3aed);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.ai-marketing-footer-subscribe-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+}
+
+.ai-marketing-footer-btn-glow {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.ai-marketing-footer-subscribe-btn:hover .ai-marketing-footer-btn-glow {
+  left: 100%;
+}
+
+.ai-marketing-footer-links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+  margin-bottom: 4rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-links-grid {
+  border-bottom-color: rgba(26, 26, 46, 0.1);
+}
+
+.ai-marketing-footer-section {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-section {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(26, 26, 46, 0.05);
+}
+
+.ai-marketing-footer-section:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-section:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.ai-marketing-footer-section-title {
+  font-size: clamp(1.125rem, 2vw, 1.25rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.ai-marketing-footer-title-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #00d4ff, #7c3aed);
+  transition: width 0.3s ease;
+}
+
+.ai-marketing-footer-section:hover .ai-marketing-footer-title-underline {
+  width: 100%;
+}
+
+.ai-marketing-footer-links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ai-marketing-footer-link-item {
+  position: relative;
+}
+
+.ai-marketing-footer-link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-link {
+  color: rgba(26, 26, 46, 0.8);
+}
+
+.ai-marketing-footer-link:hover {
+  color: #00d4ff;
+  transform: translateX(8px);
+}
+
+.ai-marketing-footer-link-hover-effect {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 212, 255, 0.1),
+    transparent
+  );
+  transition: left 0.3s ease;
+}
+
+.ai-marketing-footer-link:hover .ai-marketing-footer-link-hover-effect {
+  left: 100%;
+}
+
+.ai-marketing-footer-social-contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 3rem;
+}
+
+.ai-marketing-footer-social-title,
+.ai-marketing-footer-contact-title {
+  font-size: clamp(1.125rem, 2vw, 1.25rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.ai-marketing-footer-social-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.ai-marketing-footer-social-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-social-link {
+  background: rgba(255, 255, 255, 0.8);
+  color: rgba(26, 26, 46, 0.8);
+  border-color: rgba(26, 26, 46, 0.1);
+}
+
+.ai-marketing-footer-social-link:hover {
+  transform: translateY(-3px);
+  background: rgba(0, 212, 255, 0.1);
+  border-color: #00d4ff;
+  color: #00d4ff;
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
+.ai-marketing-footer-social-glow {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 212, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.ai-marketing-footer-social-link:hover .ai-marketing-footer-social-glow {
+  left: 100%;
+}
+
+.ai-marketing-footer-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ai-marketing-footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+}
+
+.ai-marketing-footer-contact-icon {
+  font-size: 1.25rem;
+  width: 2rem;
+  text-align: center;
+}
+
+.ai-marketing-footer-contact-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  transition: color 0.3s ease;
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-contact-link {
+  color: rgba(26, 26, 46, 0.8);
+}
+
+.ai-marketing-footer-contact-link:hover {
+  color: #00d4ff;
+}
+
+.ai-marketing-footer-contact-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-contact-text {
+  color: rgba(26, 26, 46, 0.8);
+}
+
+.ai-marketing-footer-bottom {
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-bottom {
+  border-top-color: rgba(26, 26, 46, 0.1);
+}
+
+.ai-marketing-footer-bottom-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.ai-marketing-footer-legal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ai-marketing-footer-copyright {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-copyright {
+  color: rgba(26, 26, 46, 0.6);
+}
+
+.ai-marketing-footer-legal-links {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.ai-marketing-footer-legal-link {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  transition: color 0.3s ease;
+}
+
+.ai-marketing-footer.light .ai-marketing-footer-legal-link {
+  color: rgba(26, 26, 46, 0.6);
+}
+
+.ai-marketing-footer-legal-link:hover {
+  color: #00d4ff;
+}
+
+.ai-marketing-footer-badges {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.ai-marketing-footer-badge {
+  padding: 0.5rem 1rem;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.ai-marketing-footer-badge-text {
+  color: #00d4ff;
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  font-weight: 500;
+}
+
+/* Animations */
+@keyframes ai-marketing-footer-float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes ai-marketing-footer-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+}
+
+@keyframes ai-marketing-footer-flow {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes ai-marketing-footer-rotate {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .ai-marketing-footer-container {
+    padding: 0 1.5rem;
+  }
+
+  .ai-marketing-footer-header {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .ai-marketing-footer-links-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .ai-marketing-footer {
+    padding: 3rem 0 1.5rem;
+  }
+
+  .ai-marketing-footer-container {
+    padding: 0 1rem;
+  }
+
+  .ai-marketing-footer-header {
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .ai-marketing-footer-newsletter-form {
+    flex-direction: column;
+  }
+
+  .ai-marketing-footer-email-input {
+    min-width: 100%;
+  }
+
+  .ai-marketing-footer-links-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .ai-marketing-footer-social-contact {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .ai-marketing-footer-social-links {
+    justify-content: center;
+  }
+
+  .ai-marketing-footer-bottom-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .ai-marketing-footer-legal {
+    align-items: center;
+  }
+
+  .ai-marketing-footer-legal-links {
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .ai-marketing-footer-badges {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ai-marketing-footer {
+    padding: 2rem 0 1rem;
+  }
+
+  .ai-marketing-footer-section {
+    padding: 1rem;
+  }
+
+  .ai-marketing-footer-social-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ai-marketing-footer-social-link {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .ai-marketing-footer-legal-links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ai-marketing-footer-badges {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .ai-marketing-footer {
+    border-top: 2px solid currentColor;
+  }
+
+  .ai-marketing-footer-section {
+    border: 2px solid currentColor;
+  }
+
+  .ai-marketing-footer-link:hover {
+    background-color: currentColor;
+    color: white;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .ai-marketing-footer-particle,
+  .ai-marketing-footer-node,
+  .ai-marketing-footer-connection,
+  .ai-marketing-footer-logo-cube {
+    animation: none;
+  }
+
+  .ai-marketing-footer-section:hover,
+  .ai-marketing-footer-subscribe-btn:hover,
+  .ai-marketing-footer-social-link:hover {
+    transform: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .ai-marketing-footer {
+    background: white !important;
+    color: black !important;
+    box-shadow: none;
+  }
+
+  .ai-marketing-footer-bg-animation {
+    display: none;
+  }
+
+  .ai-marketing-footer-subscribe-btn {
+    display: none;
+  }
+}
