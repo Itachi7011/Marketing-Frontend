@@ -14,6 +14,11 @@ import './CSS/AboutUs.css'
 import './CSS/ContactUs.css'
 import './CSS/UserProfile.css'
 
+import './CSS/DigitalMarketing/SocialMediaMarketing.css'
+import './CSS/DigitalMarketing/SearchMarketing.css'
+import './CSS/DigitalMarketing/ContentCreation.css'
+import './CSS/DigitalMarketing/ScheduleDemo.css'
+
 
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -21,6 +26,12 @@ import Signup from './pages/auth/Signup';
 import EmailVerification from './pages/auth/EmailVerification';
 import Login from './pages/auth/Login';
 import UserProfile from './pages/profiles/UserProfile';
+
+import SocialMediaMarketing from './pages/digitalMarketing/SocialMediaMarketing';
+import SearchMarketing from './pages/digitalMarketing/SearchMarketing';
+import ContentCreation from './pages/digitalMarketing/ContentCreation';
+import ScheduleDemo from './pages/digitalMarketing/ScheduleDemo';
+
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 
@@ -47,6 +58,12 @@ function App() {
             <Route path="/EmailVerification" element={<EmailVerification />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/UserProfile" element={<UserProfile />} />
+
+            <Route path="/SocialMediaMarketing" element={<SocialMediaMarketing />} />
+            <Route path="/SearchMarketing" element={<SearchMarketing />} />
+            <Route path="/ContentCreation" element={<ContentCreation />} />
+            <Route path="/ScheduleDemo" element={<ScheduleDemo />} />
+
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/ContactUs" element={<ContactUs />} />
 

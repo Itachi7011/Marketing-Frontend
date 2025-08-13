@@ -92,7 +92,7 @@ const PremiumNavbar = () => {
           subItems: [
             {
               label: 'Social Media',
-              href: '#',
+              href: '/SocialMediaMarketing',
               icon: '📱',
               hasSubDropdown: true,
               subItems: [
@@ -104,7 +104,7 @@ const PremiumNavbar = () => {
             },
             {
               label: 'Search Marketing',
-              href: '#',
+              href: '/SearchMarketing',
               icon: '🔍',
               hasSubDropdown: true,
               subItems: [
@@ -115,7 +115,7 @@ const PremiumNavbar = () => {
             },
             {
               label: 'Content Creation',
-              href: '#',
+              href: '/ContentCreation',
               icon: '✍️',
               hasSubDropdown: true,
               subItems: [
