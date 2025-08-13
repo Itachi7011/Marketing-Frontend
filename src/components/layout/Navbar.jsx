@@ -1,14 +1,62 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 import { UserContext } from "../../App";
+import Swal from 'sweetalert2';
 
 const PremiumNavbar = () => {
   const { state, dispatch } = useContext(UserContext);
+  const [userProfile, setUserProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeSubDropdown, setActiveSubDropdown] = useState(null);
+
+
+
+  const fetchUserProfile = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
+      const response = await fetch('/api/auth/userProfile', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Navbars Fetched profile data:', data);
+        setUserProfile(data);
+
+
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch profile');
+      }
+    } catch (error) {
+      console.error('Fetch error:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message || 'Failed to load profile data'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -310,6 +358,12 @@ const PremiumNavbar = () => {
     ));
   };
 
+console.log("profile's data is", userProfile?.personalInfo?.userType)
+
+  if (userProfile?.personalInfo?.userType === "admin") {
+    return (<></>)
+  } 
+
   return (
     <nav className={`pmnav-container ${isDarkMode ? 'dark' : 'light'} ${isScrolled ? 'pmnav-scrolled' : ''}`}>
       <div className="pmnav-wrapper">
@@ -427,6 +481,8 @@ const PremiumNavbar = () => {
       </div>
     </nav>
   );
+
+
 };
 
 export default PremiumNavbar;

@@ -656,11 +656,13 @@
 .social-media-trend-content {
   background: var(--social-media-bg-primary);
   border-radius: 15px;
-  padding: 2rem;
+  padding: 1.5rem;
   box-shadow: 0 10px 40px var(--social-media-shadow);
   border: 1px solid var(--social-media-border);
   max-width: 400px;
   transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .social-media-trend-content:hover {
@@ -727,6 +729,71 @@
   color: var(--social-media-text-secondary);
   line-height: 1.7;
   font-size: 0.95rem;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .social-media-trends-timeline::before {
+    left: 30px;
+  }
+  
+  .social-media-trend-item,
+  .social-media-trend-item:nth-child(even) {
+    justify-content: flex-start;
+    padding-left: 4rem;
+    padding-right: 1rem;
+  }
+  
+  .social-media-trend-timeline-marker {
+    left: 30px;
+  }
+  
+  .social-media-trend-content {
+    max-width: 100%;
+    padding: 1.2rem;
+  }
+  
+  .social-media-trend-title {
+    font-size: 1.1rem;
+  }
+  
+  .social-media-trend-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .social-media-trend-item,
+  .social-media-trend-item:nth-child(even) {
+    padding-left: 3rem;
+  }
+  
+  .social-media-trend-timeline-marker {
+    left: 22px;
+    width: 12px;
+    height: 12px;
+  }
+  
+  .social-media-trend-content {
+    padding: 1rem;
+  }
+  
+  .social-media-trend-title {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .social-media-trend-description {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+  
+  .social-media-trend-impact,
+  .social-media-trend-timeline {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+  }
 }
 
 /* CTA Section */

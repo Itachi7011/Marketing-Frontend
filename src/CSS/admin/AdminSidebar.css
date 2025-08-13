@@ -1,0 +1,908 @@
+/* Marketing AI Sidebar Styles */
+
+/* Base Container */
+.marketing-ai-sidebar-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 280px;
+  background: linear-gradient(145deg, #1a1d29, #252940);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.2);
+  transform-style: preserve-3d;
+}
+
+.marketing-ai-sidebar-container.light {
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.marketing-ai-sidebar-container.collapsed {
+  width: 80px;
+}
+
+/* Header Section */
+.marketing-ai-sidebar-header {
+  padding: 24px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.1),
+    rgba(59, 130, 246, 0.1)
+  );
+  backdrop-filter: blur(10px);
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-sidebar-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.05),
+    rgba(59, 130, 246, 0.05)
+  );
+}
+
+.marketing-ai-admin-profile-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.marketing-ai-profile-image-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.marketing-ai-profile-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 3px solid transparent;
+  background: linear-gradient(145deg, #8b5cf6, #3b82f6);
+  padding: 2px;
+  transition: all 0.3s ease;
+  transform: translateZ(10px);
+}
+
+.marketing-ai-profile-image:hover {
+  transform: translateZ(15px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+}
+
+.marketing-ai-profile-status-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(145deg, #10b981, #059669);
+  border-radius: 50%;
+  border: 3px solid #1a1d29;
+  animation: marketing-ai-pulse 2s infinite;
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-profile-status-indicator {
+  border-color: #ffffff;
+}
+
+@keyframes marketing-ai-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+.marketing-ai-admin-info {
+  flex: 1;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: marketing-ai-slide-in 0.6s ease forwards;
+}
+
+.marketing-ai-admin-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-admin-name {
+  color: #1f2937;
+}
+
+.marketing-ai-admin-role {
+  font-size: 12px;
+  color: #94a3b8;
+  margin: 0;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-admin-role {
+  color: #6b7280;
+}
+
+.marketing-ai-toggle-button {
+  background: linear-gradient(
+    145deg,
+    rgba(139, 92, 246, 0.2),
+    rgba(59, 130, 246, 0.2)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  transform: translateZ(5px);
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-toggle-button {
+  background: linear-gradient(
+    145deg,
+    rgba(139, 92, 246, 0.1),
+    rgba(59, 130, 246, 0.1)
+  );
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.marketing-ai-toggle-button:hover {
+  transform: translateZ(8px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+  background: linear-gradient(
+    145deg,
+    rgba(139, 92, 246, 0.3),
+    rgba(59, 130, 246, 0.3)
+  );
+}
+
+.marketing-ai-toggle-icon {
+  width: 20px;
+  height: 20px;
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-toggle-icon {
+  color: #374151;
+}
+
+/* Navigation Menu */
+.marketing-ai-navigation-menu {
+  flex: 1;
+  padding: 20px 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.marketing-ai-navigation-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.marketing-ai-navigation-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.marketing-ai-navigation-menu::-webkit-scrollbar-thumb {
+  background: linear-gradient(145deg, #8b5cf6, #3b82f6);
+  border-radius: 3px;
+}
+
+.marketing-ai-menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 16px;
+}
+
+.marketing-ai-menu-item {
+  margin-bottom: 4px;
+}
+
+.marketing-ai-menu-button {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 14px 16px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.marketing-ai-menu-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.marketing-ai-menu-button:hover::before {
+  left: 100%;
+}
+
+.marketing-ai-menu-button:hover {
+  background: linear-gradient(
+    145deg,
+    rgba(139, 92, 246, 0.15),
+    rgba(59, 130, 246, 0.15)
+  );
+  transform: translateZ(5px) translateX(8px);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-menu-button:hover {
+  background: linear-gradient(
+    145deg,
+    rgba(139, 92, 246, 0.1),
+    rgba(59, 130, 246, 0.1)
+  );
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15);
+}
+
+.marketing-ai-menu-button.active {
+  background: linear-gradient(145deg, #8b5cf6, #3b82f6);
+  box-shadow: 0 12px 30px rgba(139, 92, 246, 0.4);
+  transform: translateZ(8px);
+}
+
+.marketing-ai-menu-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.marketing-ai-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.marketing-ai-menu-icon {
+  width: 20px;
+  height: 20px;
+  color: #94a3b8;
+  transition: all 0.3s ease;
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-menu-icon {
+  color: #6b7280;
+}
+
+.marketing-ai-menu-button:hover .marketing-ai-menu-icon,
+.marketing-ai-menu-button.active .marketing-ai-menu-icon {
+  color: #00f0ff; /* Electric blue */
+  transform: scale(1.1) rotate(5deg);
+}
+
+.marketing-ai-menu-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e2e8f0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-menu-text {
+  color: #374151;
+}
+
+.marketing-ai-menu-button:hover .marketing-ai-menu-text,
+.marketing-ai-menu-button.active .marketing-ai-menu-text {
+  color: #00f0ff; /* Electric blue */
+  transform: translateX(4px);
+}
+
+.marketing-ai-dropdown-arrow {
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.marketing-ai-menu-button.active .marketing-ai-dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.marketing-ai-arrow-icon {
+  width: 16px;
+  height: 16px;
+  color: #64748b;
+  transition: all 0.3s ease;
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-arrow-icon {
+  color: #9ca3af;
+}
+
+.marketing-ai-menu-button:hover .marketing-ai-arrow-icon,
+.marketing-ai-menu-button.active .marketing-ai-arrow-icon {
+  color: #ffffff;
+}
+
+/* Dropdown Menu */
+.marketing-ai-dropdown-menu {
+  list-style: none;
+  margin: 8px 0 0 0;
+  padding: 0;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.02)
+  );
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  transform: translateZ(2px);
+  animation: marketing-ai-dropdown-in 0.4s ease;
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-dropdown-menu {
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.01));
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+@keyframes marketing-ai-dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateZ(2px) translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(2px) translateY(0) scale(1);
+  }
+}
+
+.marketing-ai-dropdown-item {
+  margin: 0;
+}
+
+.marketing-ai-dropdown-button {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+.marketing-ai-dropdown-button:first-child {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.marketing-ai-dropdown-button:last-child {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.marketing-ai-dropdown-button:hover {
+  background: linear-gradient(
+    145deg,
+    rgba(139, 92, 246, 0.1),
+    rgba(59, 130, 246, 0.1)
+  );
+  transform: translateX(6px);
+  box-shadow: inset 4px 0 0 #8b5cf6;
+}
+
+.marketing-ai-submenu-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.marketing-ai-submenu-icon {
+  width: 16px;
+  height: 16px;
+  color: #64748b;
+  transition: all 0.3s ease;
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-submenu-icon {
+  color: #9ca3af;
+}
+
+.marketing-ai-dropdown-button:hover .marketing-ai-submenu-icon {
+  color: #8b5cf6;
+  transform: scale(1.1);
+}
+
+.marketing-ai-dropdown-text {
+  font-size: 14px;
+  color: #cbd5e1;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-dropdown-text {
+  color: #4b5563;
+}
+
+.marketing-ai-dropdown-button:hover .marketing-ai-dropdown-text {
+  color: #8b5cf6;
+  font-weight: 600;
+}
+
+/* Brand Footer */
+.marketing-ai-sidebar-footer {
+  padding: 24px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.05),
+    rgba(59, 130, 246, 0.05)
+  );
+  backdrop-filter: blur(10px);
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-sidebar-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.03),
+    rgba(59, 130, 246, 0.03)
+  );
+}
+
+.marketing-ai-brand-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.marketing-ai-brand-logo {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(145deg, #8b5cf6, #3b82f6);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+  animation: marketing-ai-float 3s ease-in-out infinite;
+}
+
+@keyframes marketing-ai-float {
+  0%,
+  100% {
+    transform: translateY(0) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotateY(5deg);
+  }
+}
+
+.marketing-ai-brand-icon {
+  width: 22px;
+  height: 22px;
+  color: #ffffff;
+}
+
+.marketing-ai-brand-info {
+  flex: 1;
+}
+
+.marketing-ai-brand-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 2px 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-brand-name {
+  color: #1f2937;
+}
+
+.marketing-ai-brand-version {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-brand-version {
+  color: #9ca3af;
+}
+
+/* Animations */
+@keyframes marketing-ai-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Collapsed State Adjustments */
+.marketing-ai-sidebar-container.collapsed .marketing-ai-admin-profile-section {
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.marketing-ai-sidebar-container.collapsed .marketing-ai-admin-info {
+  display: none;
+}
+
+.marketing-ai-sidebar-container.collapsed .marketing-ai-menu-text,
+.marketing-ai-sidebar-container.collapsed .marketing-ai-dropdown-text,
+.marketing-ai-sidebar-container.collapsed .marketing-ai-dropdown-arrow {
+  display: none;
+}
+
+.marketing-ai-sidebar-container.collapsed .marketing-ai-dropdown-menu {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  width: 200px;
+  margin-left: 8px;
+  z-index: 1001;
+}
+
+.marketing-ai-sidebar-container.collapsed .marketing-ai-menu-button {
+  justify-content: center;
+  padding: 16px;
+}
+
+.marketing-ai-sidebar-container.collapsed .marketing-ai-sidebar-footer {
+  display: none;
+}
+
+.marketing-ai-sidebar-container.collapsed .marketing-ai-brand-section {
+  justify-content: center;
+}
+
+.marketing-ai-sidebar-container.collapsed .marketing-ai-brand-info {
+  display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .marketing-ai-sidebar-container {
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .marketing-ai-sidebar-container.mobile-open {
+    transform: translateX(0);
+  }
+
+  .marketing-ai-sidebar-container::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 280px;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .marketing-ai-sidebar-container.mobile-open::after {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+@media (max-width: 768px) {
+  .marketing-ai-sidebar-container {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .marketing-ai-sidebar-container.collapsed {
+    width: 100%;
+    max-width: 80px;
+  }
+
+  .marketing-ai-sidebar-header {
+    padding: 20px 16px;
+  }
+
+  .marketing-ai-admin-name {
+    font-size: 15px;
+  }
+
+  .marketing-ai-admin-role {
+    font-size: 11px;
+  }
+
+  .marketing-ai-menu-text {
+    font-size: 14px;
+  }
+
+  .marketing-ai-dropdown-text {
+    font-size: 13px;
+  }
+
+  .marketing-ai-menu-button {
+    padding: 12px 14px;
+  }
+
+  .marketing-ai-dropdown-button {
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .marketing-ai-sidebar-container {
+    width: 100vw;
+    max-width: 100vw;
+  }
+
+  .marketing-ai-profile-image {
+    width: 44px;
+    height: 44px;
+  }
+
+  .marketing-ai-sidebar-header {
+    padding: 16px 14px;
+  }
+
+  .marketing-ai-navigation-menu {
+    padding: 16px 0;
+  }
+
+  .marketing-ai-menu-list {
+    padding: 0 12px;
+  }
+
+  .marketing-ai-sidebar-footer {
+    padding: 20px 16px;
+  }
+}
+
+/* High DPI Display Support */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .marketing-ai-profile-image {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  .marketing-ai-sidebar-container,
+  .marketing-ai-menu-button,
+  .marketing-ai-dropdown-menu,
+  .marketing-ai-profile-image,
+  .marketing-ai-toggle-button,
+  .marketing-ai-brand-logo {
+    animation: none;
+    transition: none;
+  }
+
+  .marketing-ai-menu-button::before {
+    display: none;
+  }
+}
+
+/* Focus States for Accessibility */
+.marketing-ai-menu-button:focus,
+.marketing-ai-dropdown-button:focus,
+.marketing-ai-toggle-button:focus {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .marketing-ai-sidebar-container {
+    display: none;
+  }
+}
+
+/* Dark Mode Specific Enhancements */
+.marketing-ai-sidebar-container.dark {
+  background: linear-gradient(145deg, #0f0f23, #1a1d29);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.marketing-ai-sidebar-container.dark .marketing-ai-menu-button:hover {
+  background: linear-gradient(
+    145deg,
+    rgba(139, 92, 246, 0.2),
+    rgba(59, 130, 246, 0.2)
+  );
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25);
+}
+
+.marketing-ai-sidebar-container.dark .marketing-ai-dropdown-menu {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.04)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Light Mode Specific Enhancements */
+.marketing-ai-sidebar-container.light {
+  background: linear-gradient(145deg, #ffffff, #f1f5f9);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1), 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-menu-button:hover {
+  background: linear-gradient(
+    145deg,
+    rgba(139, 92, 246, 0.08),
+    rgba(59, 130, 246, 0.08)
+  );
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.12);
+}
+
+.marketing-ai-sidebar-container.light .marketing-ai-dropdown-menu {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(248, 250, 252, 0.9)
+  );
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Premium Gradient Text Effects */
+.marketing-ai-menu-button.active .marketing-ai-menu-text {
+  background: linear-gradient(145deg, #ffffff, #e2e8f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.marketing-ai-sidebar-container.light
+  .marketing-ai-menu-button.active
+  .marketing-ai-menu-text {
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Advanced 3D Effects */
+.marketing-ai-sidebar-container {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.marketing-ai-menu-button {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.marketing-ai-menu-button:hover {
+  transform: translateZ(8px) translateX(8px) rotateY(2deg);
+}
+
+.marketing-ai-menu-button.active {
+  transform: translateZ(12px) rotateY(1deg);
+}
+
+/* Custom Scrollbar for Different Themes */
+.marketing-ai-sidebar-container.light
+  .marketing-ai-navigation-menu::-webkit-scrollbar-thumb {
+  background: linear-gradient(145deg, #8b5cf6, #3b82f6);
+}
+
+.marketing-ai-sidebar-container.light
+  .marketing-ai-navigation-menu::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+/* Micro-interactions */
+.marketing-ai-icon-wrapper {
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.marketing-ai-menu-button:active .marketing-ai-icon-wrapper {
+  transform: scale(0.95);
+}
+
+.marketing-ai-dropdown-arrow {
+  transform-origin: center;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Loading States */
+.marketing-ai-menu-button.loading {
+  pointer-events: none;
+}
+
+.marketing-ai-menu-button.loading .marketing-ai-icon-wrapper {
+  animation: marketing-ai-spin 1s linear infinite;
+}
+
+@keyframes marketing-ai-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Status Indicators */
+.marketing-ai-menu-item.has-notification::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(145deg, #ef4444, #dc2626);
+  border-radius: 50%;
+  animation: marketing-ai-pulse 2s infinite;
+}
+
+.marketing-ai-sidebar-container.collapsed
+  .marketing-ai-menu-item.has-notification::after {
+  top: 8px;
+  right: 8px;
+}
+
+@media (max-width: 480px) {
+  .marketing-ai-sidebar-container {
+    margin-left: 20rem;
+
+  }
+  .marketing-ai-sidebar-container .collapsed {
+    margin-left: 20rem;
+  }
+}

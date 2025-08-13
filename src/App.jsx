@@ -19,6 +19,8 @@ import './CSS/DigitalMarketing/SearchMarketing.css'
 import './CSS/DigitalMarketing/ContentCreation.css'
 import './CSS/DigitalMarketing/ScheduleDemo.css'
 
+import './CSS/admin/AdminSidebar.css'
+
 
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -31,6 +33,8 @@ import SocialMediaMarketing from './pages/digitalMarketing/SocialMediaMarketing'
 import SearchMarketing from './pages/digitalMarketing/SearchMarketing';
 import ContentCreation from './pages/digitalMarketing/ContentCreation';
 import ScheduleDemo from './pages/digitalMarketing/ScheduleDemo';
+
+import AdminSidebar from './pages/admin/layout/AdminSidebar';
 
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
@@ -51,6 +55,7 @@ function App() {
         <Router>
 
           <Navbar />
+          <AdminSidebar />
           <Routes>
 
             {/* <Route path="/Login" element={<Login />} /> */}
@@ -66,6 +71,8 @@ function App() {
 
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/ContactUs" element={<ContactUs />} />
+
+            {/* <Route path="/AdminSidebar" element={<AdminSidebar />} /> */}
 
 
 
