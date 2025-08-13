@@ -332,7 +332,7 @@ const SignupPage = () => {
                             className={`signup-input-field ${errors.password ? 'error' : ''}`}
                             value={formData.password}
                             onChange={handleInputChange}
-                            placeholder="Create a strong password"
+                            placeholder="password"
                         />
                         <button
                             type="button"
@@ -357,7 +357,7 @@ const SignupPage = () => {
                             className={`signup-input-field ${errors.confirmPassword ? 'error' : ''}`}
                             value={formData.confirmPassword}
                             onChange={handleInputChange}
-                            placeholder="Confirm your password"
+                            placeholder="Confirm password"
                         />
                         <button
                             type="button"

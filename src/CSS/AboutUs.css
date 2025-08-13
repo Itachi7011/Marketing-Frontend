@@ -1,0 +1,1396 @@
+/* AboutUs.css */
+
+/* Root Variables for Light and Dark Themes */
+:root {
+  --marketing-ai-primary-color: #6366f1;
+  --marketing-ai-primary-dark: #4f46e5;
+  --marketing-ai-secondary-color: #06b6d4;
+  --marketing-ai-accent-color: #f59e0b;
+  --marketing-ai-success-color: #10b981;
+  --marketing-ai-danger-color: #ef4444;
+  
+  /* Light Theme Colors */
+  --marketing-ai-light-bg: #ffffff;
+  --marketing-ai-light-surface: #f8fafc;
+  --marketing-ai-light-card: #ffffff;
+  --marketing-ai-light-text: #1e293b;
+  --marketing-ai-light-text-secondary: #64748b;
+  --marketing-ai-light-border: #e2e8f0;
+  --marketing-ai-light-shadow: rgba(0, 0, 0, 0.1);
+  
+  /* Dark Theme Colors */
+  --marketing-ai-dark-bg: #0f172a;
+  --marketing-ai-dark-surface: #1e293b;
+  --marketing-ai-dark-card: #334155;
+  --marketing-ai-dark-text: #f8fafc;
+  --marketing-ai-dark-text-secondary: #cbd5e1;
+  --marketing-ai-dark-border: #475569;
+  --marketing-ai-dark-shadow: rgba(0, 0, 0, 0.3);
+  
+  /* Spacing and Typography */
+  --marketing-ai-container-max: 1200px;
+  --marketing-ai-container-padding: 2rem;
+  --marketing-ai-section-spacing: 6rem;
+  --marketing-ai-border-radius: 12px;
+  --marketing-ai-border-radius-large: 20px;
+  --marketing-ai-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Styles */
+/* Hero CTA Buttons */
+.marketing-ai-hero-cta-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.marketing-ai-primary-btn,
+.marketing-ai-secondary-btn {
+  padding: 1rem 2rem;
+  border-radius: var(--marketing-ai-border-radius);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--marketing-ai-transition);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid transparent;
+}
+
+.marketing-ai-primary-btn {
+  background: var(--marketing-ai-accent-color);
+  color: white;
+  border-color: var(--marketing-ai-accent-color);
+}
+
+.marketing-ai-primary-btn:hover {
+  background: transparent;
+  color: var(--marketing-ai-accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+}
+
+.marketing-ai-secondary-btn {
+  background: transparent;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.marketing-ai-secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Admin Controls */
+.marketing-ai-admin-controls {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: var(--marketing-ai-transition);
+  z-index: 10;
+}
+
+.marketing-ai-hero-content-wrapper:hover .marketing-ai-admin-controls,
+.marketing-ai-stat-item:hover .marketing-ai-admin-controls,
+.marketing-ai-feature-card:hover .marketing-ai-admin-controls,
+.marketing-ai-timeline-item:hover .marketing-ai-admin-controls,
+.marketing-ai-team-card:hover .marketing-ai-admin-controls,
+.marketing-ai-value-card:hover .marketing-ai-admin-controls,
+.marketing-ai-testimonial-card:hover .marketing-ai-admin-controls,
+.marketing-ai-mission-card:hover .marketing-ai-admin-controls,
+.marketing-ai-vision-card:hover .marketing-ai-admin-controls {
+  opacity: 1;
+}
+
+.marketing-ai-edit-btn,
+.marketing-ai-admin-controls button {
+  background: var(--marketing-ai-primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: var(--marketing-ai-transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.marketing-ai-edit-btn:hover,
+.marketing-ai-admin-controls button:hover {
+  background: var(--marketing-ai-primary-dark);
+  transform: scale(1.1);
+}
+
+.marketing-ai-admin-controls button:last-child {
+  background: var(--marketing-ai-danger-color);
+}
+
+.marketing-ai-admin-controls button:last-child:hover {
+  background: #dc2626;
+}
+
+/* Add Button */
+.marketing-ai-add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--marketing-ai-success-color);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: var(--marketing-ai-border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--marketing-ai-transition);
+  margin: 3rem auto 0;
+  font-size: 1rem;
+}
+
+.marketing-ai-add-btn:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+}
+
+/* Stats Section */
+.marketing-ai-stats-section {
+  padding: var(--marketing-ai-section-spacing) 0;
+  position: relative;
+}
+
+.marketing-ai-about-container.light .marketing-ai-stats-section {
+  background: var(--marketing-ai-light-surface);
+}
+
+.marketing-ai-about-container.dark .marketing-ai-stats-section {
+  background: var(--marketing-ai-dark-surface);
+}
+
+.marketing-ai-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.marketing-ai-stat-item {
+  position: relative;
+  text-align: center;
+  padding: 3rem 2rem;
+  border-radius: var(--marketing-ai-border-radius-large);
+  transition: var(--marketing-ai-transition);
+  cursor: pointer;
+}
+
+.marketing-ai-about-container.light .marketing-ai-stat-item {
+  background: var(--marketing-ai-light-card);
+  box-shadow: 0 4px 20px var(--marketing-ai-light-shadow);
+  border: 1px solid var(--marketing-ai-light-border);
+}
+
+.marketing-ai-about-container.dark .marketing-ai-stat-item {
+  background: var(--marketing-ai-dark-card);
+  box-shadow: 0 4px 20px var(--marketing-ai-dark-shadow);
+  border: 1px solid var(--marketing-ai-dark-border);
+}
+
+.marketing-ai-stat-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+}
+
+.marketing-ai-stat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--marketing-ai-primary-color), var(--marketing-ai-secondary-color));
+  color: white;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.marketing-ai-stat-number {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--marketing-ai-primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.marketing-ai-stat-label {
+  font-size: 1.125rem;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+/* Mission & Vision Section */
+.marketing-ai-mission-vision-section {
+  padding: var(--marketing-ai-section-spacing) 0;
+}
+
+.marketing-ai-mission-vision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 3rem;
+}
+
+.marketing-ai-mission-card,
+.marketing-ai-vision-card {
+  position: relative;
+  padding: 3rem;
+  border-radius: var(--marketing-ai-border-radius-large);
+  transition: var(--marketing-ai-transition);
+  overflow: hidden;
+}
+
+.marketing-ai-about-container.light .marketing-ai-mission-card,
+.marketing-ai-about-container.light .marketing-ai-vision-card {
+  background: var(--marketing-ai-light-card);
+  box-shadow: 0 8px 30px var(--marketing-ai-light-shadow);
+  border: 1px solid var(--marketing-ai-light-border);
+}
+
+.marketing-ai-about-container.dark .marketing-ai-mission-card,
+.marketing-ai-about-container.dark .marketing-ai-vision-card {
+  background: var(--marketing-ai-dark-card);
+  box-shadow: 0 8px 30px var(--marketing-ai-dark-shadow);
+  border: 1px solid var(--marketing-ai-dark-border);
+}
+
+.marketing-ai-mission-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--marketing-ai-primary-color), var(--marketing-ai-secondary-color));
+}
+
+.marketing-ai-vision-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--marketing-ai-secondary-color), var(--marketing-ai-accent-color));
+}
+
+.marketing-ai-card-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--marketing-ai-primary-color);
+}
+
+.marketing-ai-card-description {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+/* Section Headers */
+.marketing-ai-section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, var(--marketing-ai-primary-color), var(--marketing-ai-secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.marketing-ai-section-subtitle {
+  font-size: 1.25rem;
+  text-align: center;
+  margin-bottom: 4rem;
+  opacity: 0.8;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Features Section */
+.marketing-ai-features-section {
+  padding: var(--marketing-ai-section-spacing) 0;
+}
+
+.marketing-ai-about-container.light .marketing-ai-features-section {
+  background: var(--marketing-ai-light-surface);
+}
+
+.marketing-ai-about-container.dark .marketing-ai-features-section {
+  background: var(--marketing-ai-dark-surface);
+}
+
+.marketing-ai-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.marketing-ai-feature-card {
+  position: relative;
+  padding: 2.5rem;
+  border-radius: var(--marketing-ai-border-radius-large);
+  transition: var(--marketing-ai-transition);
+  transform: translateZ(0);
+}
+
+.marketing-ai-about-container.light .marketing-ai-feature-card {
+  background: var(--marketing-ai-light-card);
+  box-shadow: 0 4px 20px var(--marketing-ai-light-shadow);
+  border: 1px solid var(--marketing-ai-light-border);
+}
+
+.marketing-ai-about-container.dark .marketing-ai-feature-card {
+  background: var(--marketing-ai-dark-card);
+  box-shadow: 0 4px 20px var(--marketing-ai-dark-shadow);
+  border: 1px solid var(--marketing-ai-dark-border);
+}
+
+.marketing-ai-feature-card:hover {
+  transform: translateY(-8px) rotateX(5deg);
+  box-shadow: 0 25px 50px rgba(99, 102, 241, 0.2);
+}
+
+.marketing-ai-feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border-radius: var(--marketing-ai-border-radius);
+  background: linear-gradient(135deg, var(--marketing-ai-primary-color), var(--marketing-ai-secondary-color));
+  color: white;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+}
+
+.marketing-ai-feature-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--marketing-ai-primary-color);
+}
+
+.marketing-ai-feature-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.marketing-ai-feature-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.marketing-ai-feature-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+.marketing-ai-feature-benefits li::before {
+  content: '✓';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--marketing-ai-success-color);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+/* Timeline Section */
+.marketing-ai-timeline-section {
+  padding: var(--marketing-ai-section-spacing) 0;
+}
+
+.marketing-ai-timeline-wrapper {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.marketing-ai-timeline-wrapper::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--marketing-ai-primary-color), var(--marketing-ai-secondary-color));
+  transform: translateX(-50%);
+}
+
+.marketing-ai-timeline-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 4rem;
+  padding: 0 2rem;
+}
+
+.marketing-ai-timeline-item:nth-child(odd) {
+  flex-direction: row;
+}
+
+.marketing-ai-timeline-item:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.marketing-ai-timeline-marker {
+  position: absolute;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  background: var(--marketing-ai-primary-color);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  box-shadow: 0 0 0 4px var(--marketing-ai-light-bg), 0 0 0 8px var(--marketing-ai-primary-color);
+}
+
+.marketing-ai-about-container.dark .marketing-ai-timeline-marker {
+  box-shadow: 0 0 0 4px var(--marketing-ai-dark-bg), 0 0 0 8px var(--marketing-ai-primary-color);
+}
+
+.marketing-ai-timeline-content {
+  position: relative;
+  flex: 1;
+  max-width: calc(50% - 40px);
+  padding: 2rem;
+  border-radius: var(--marketing-ai-border-radius-large);
+  transition: var(--marketing-ai-transition);
+}
+
+.marketing-ai-about-container.light .marketing-ai-timeline-content {
+  background: var(--marketing-ai-light-card);
+  box-shadow: 0 4px 20px var(--marketing-ai-light-shadow);
+  border: 1px solid var(--marketing-ai-light-border);
+}
+
+.marketing-ai-about-container.dark .marketing-ai-timeline-content {
+  background: var(--marketing-ai-dark-card);
+  box-shadow: 0 4px 20px var(--marketing-ai-dark-shadow);
+  border: 1px solid var(--marketing-ai-dark-border);
+}
+
+.marketing-ai-timeline-year {
+  display: inline-block;
+  background: var(--marketing-ai-primary-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.marketing-ai-timeline-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--marketing-ai-primary-color);
+}
+
+.marketing-ai-timeline-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Team Section */
+.marketing-ai-team-section {
+  padding: var(--marketing-ai-section-spacing) 0;
+}
+
+.marketing-ai-about-container.light .marketing-ai-team-section {
+  background: var(--marketing-ai-light-surface);
+}
+
+.marketing-ai-about-container.dark .marketing-ai-team-section {
+  background: var(--marketing-ai-dark-surface);
+}
+
+.marketing-ai-team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.marketing-ai-team-card {
+  position: relative;
+  text-align: center;
+  padding: 2.5rem 2rem;
+  border-radius: var(--marketing-ai-border-radius-large);
+  transition: var(--marketing-ai-transition);
+}
+
+.marketing-ai-about-container.light .marketing-ai-team-card {
+  background: var(--marketing-ai-light-card);
+  box-shadow: 0 4px 20px var(--marketing-ai-light-shadow);
+  border: 1px solid var(--marketing-ai-light-border);
+}
+
+.marketing-ai-about-container.dark .marketing-ai-team-card {
+  background: var(--marketing-ai-dark-card);
+  box-shadow: 0 4px 20px var(--marketing-ai-dark-shadow);
+  border: 1px solid var(--marketing-ai-dark-border);
+}
+
+.marketing-ai-team-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(99, 102, 241, 0.15);
+}
+
+.marketing-ai-team-image {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 2rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--marketing-ai-primary-color);
+  position: relative;
+}
+
+.marketing-ai-team-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.marketing-ai-team-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--marketing-ai-primary-color);
+}
+
+.marketing-ai-team-position {
+  font-size: 1rem;
+  color: var(--marketing-ai-secondary-color);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.marketing-ai-team-bio {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.marketing-ai-team-specialties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.marketing-ai-specialty-tag {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--marketing-ai-primary-color);
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Values Section */
+.marketing-ai-values-section {
+  padding: var(--marketing-ai-section-spacing) 0;
+}
+
+.marketing-ai-values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.marketing-ai-value-card {
+  position: relative;
+  text-align: center;
+  padding: 3rem 2rem;
+  border-radius: var(--marketing-ai-border-radius-large);
+  transition: var(--marketing-ai-transition);
+  overflow: hidden;
+}
+
+.marketing-ai-about-container.light .marketing-ai-value-card {
+  background: var(--marketing-ai-light-card);
+  box-shadow: 0 4px 20px var(--marketing-ai-light-shadow);
+  border: 1px solid var(--marketing-ai-light-border);
+}
+
+.marketing-ai-about-container.dark .marketing-ai-value-card {
+  background: var(--marketing-ai-dark-card);
+  box-shadow: 0 4px 20px var(--marketing-ai-dark-shadow);
+  border: 1px solid var(--marketing-ai-dark-border);
+}
+
+.marketing-ai-value-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+.marketing-ai-value-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.6s;
+}
+
+.marketing-ai-value-card:hover::before {
+  left: 100%;
+}
+
+.marketing-ai-value-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--marketing-ai-primary-color), var(--marketing-ai-secondary-color));
+  color: white;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.marketing-ai-value-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--marketing-ai-primary-color);
+}
+
+.marketing-ai-value-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Testimonials Section */
+.marketing-ai-testimonials-section {
+  padding: var(--marketing-ai-section-spacing) 0;
+}
+
+.marketing-ai-about-container.light .marketing-ai-testimonials-section {
+  background: var(--marketing-ai-light-surface);
+}
+
+.marketing-ai-about-container.dark .marketing-ai-testimonials-section {
+  background: var(--marketing-ai-dark-surface);
+}
+
+.marketing-ai-testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.marketing-ai-testimonial-card {
+  position: relative;
+  padding: 2.5rem;
+  border-radius: var(--marketing-ai-border-radius-large);
+  transition: var(--marketing-ai-transition);
+}
+
+.marketing-ai-about-container.light .marketing-ai-testimonial-card {
+  background: var(--marketing-ai-light-card);
+  box-shadow: 0 8px 30px var(--marketing-ai-light-shadow);
+  border: 1px solid var(--marketing-ai-light-border);
+}
+
+.marketing-ai-about-container.dark .marketing-ai-testimonial-card {
+  background: var(--marketing-ai-dark-card);
+  box-shadow: 0 8px 30px var(--marketing-ai-dark-shadow);
+  border: 1px solid var(--marketing-ai-dark-border);
+}
+
+.marketing-ai-testimonial-card:hover {
+  transform: translateY(-5px);
+}
+
+.marketing-ai-testimonial-rating {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--marketing-ai-accent-color);
+}
+
+.marketing-ai-testimonial-content {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  font-style: italic;
+  opacity: 0.95;
+}
+
+.marketing-ai-testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.marketing-ai-testimonial-author img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--marketing-ai-primary-color);
+}
+
+.marketing-ai-author-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--marketing-ai-primary-color);
+}
+
+.marketing-ai-author-company {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* CTA Section */
+.marketing-ai-cta-section {
+  padding: var(--marketing-ai-section-spacing) 0;
+  background: linear-gradient(135deg, var(--marketing-ai-primary-color), var(--marketing-ai-secondary-color));
+  color: white;
+  text-align: center;
+}
+
+.marketing-ai-cta-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.marketing-ai-cta-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 3rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.marketing-ai-cta-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.marketing-ai-cta-section .marketing-ai-primary-btn {
+  background: white;
+  color: var(--marketing-ai-primary-color);
+  border-color: white;
+}
+
+.marketing-ai-cta-section .marketing-ai-primary-btn:hover {
+  background: transparent;
+  color: white;
+  border-color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  :root {
+    --marketing-ai-container-padding: 1.5rem;
+    --marketing-ai-section-spacing: 4rem;
+  }
+  
+  .marketing-ai-hero-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .marketing-ai-timeline-wrapper::before {
+    left: 2rem;
+  }
+  
+  .marketing-ai-timeline-item {
+    flex-direction: row !important;
+    padding-left: 4rem;
+  }
+  
+  .marketing-ai-timeline-marker {
+    left: 2rem;
+  }
+  
+  .marketing-ai-timeline-content {
+    max-width: none;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --marketing-ai-container-padding: 1rem;
+    --marketing-ai-section-spacing: 3rem;
+  }
+  
+  .marketing-ai-hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .marketing-ai-hero-subtitle {
+    font-size: 1.125rem;
+  }
+  
+  .marketing-ai-stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .marketing-ai-mission-vision-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .marketing-ai-features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .marketing-ai-team-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .marketing-ai-testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .marketing-ai-values-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .marketing-ai-cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .marketing-ai-hero-content-wrapper {
+    padding: 0 1rem;
+  }
+  
+  .marketing-ai-section-title {
+    font-size: 2rem;
+  }
+  
+  .marketing-ai-primary-btn,
+  .marketing-ai-secondary-btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+  
+  .marketing-ai-card-title {
+    font-size: 1.5rem;
+  }
+  
+  .marketing-ai-feature-title {
+    font-size: 1.25rem;
+  }
+  
+  .marketing-ai-timeline-item {
+    padding-left: 3rem;
+  }
+  
+  .marketing-ai-timeline-marker {
+    left: 1.5rem;
+  }
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus States */
+.marketing-ai-primary-btn:focus,
+.marketing-ai-secondary-btn:focus,
+.marketing-ai-edit-btn:focus,
+.marketing-ai-add-btn:focus,
+.marketing-ai-admin-controls button:focus {
+  outline: 2px solid var(--marketing-ai-accent-color);
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .marketing-ai-admin-controls,
+  .marketing-ai-add-btn {
+    display: none !important;
+  }
+  
+  .marketing-ai-about-container {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .marketing-ai-hero-section {
+    background: white !important;
+    color: black !important;
+    min-height: auto !important;
+    padding: 2rem 0 !important;
+  }
+  
+  .marketing-ai-section-title,
+  .marketing-ai-card-title,
+  .marketing-ai-feature-title,
+  .marketing-ai-timeline-title,
+  .marketing-ai-team-name,
+  .marketing-ai-value-title {
+    color: black !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .marketing-ai-about-container {
+    --marketing-ai-primary-color: #0000ff;
+    --marketing-ai-secondary-color: #008080;
+    --marketing-ai-accent-color: #ff8000;
+  }
+  
+  .marketing-ai-about-container.light {
+    --marketing-ai-light-text: #000000;
+    --marketing-ai-light-bg: #ffffff;
+    --marketing-ai-light-border: #000000;
+  }
+  
+  .marketing-ai-about-container.dark {
+    --marketing-ai-dark-text: #ffffff;
+    --marketing-ai-dark-bg: #000000;
+    --marketing-ai-dark-border: #ffffff;
+  }
+}
+
+/* Custom Scrollbar */
+.marketing-ai-about-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.marketing-ai-about-container::-webkit-scrollbar-track {
+  background: var(--marketing-ai-light-surface);
+}
+
+.marketing-ai-about-container.dark::-webkit-scrollbar-track {
+  background: var(--marketing-ai-dark-surface);
+}
+
+.marketing-ai-about-container::-webkit-scrollbar-thumb {
+  background: var(--marketing-ai-primary-color);
+  border-radius: 4px;
+}
+
+.marketing-ai-about-container::-webkit-scrollbar-thumb:hover {
+  background: var(--marketing-ai-primary-dark);
+}
+
+/* Selection Styles */
+.marketing-ai-about-container ::selection {
+  background: var(--marketing-ai-primary-color);
+  color: white;
+}
+
+.marketing-ai-about-container ::-moz-selection {
+  background: var(--marketing-ai-primary-color);
+  color: white;
+}
+
+/* Loading Animation Variants */
+@keyframes marketing-ai-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes marketing-ai-slideInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes marketing-ai-fadeInScale {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Gradient Animations */
+@keyframes marketing-ai-gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.marketing-ai-hero-section {
+  background: linear-gradient(-45deg, #6366f1, #06b6d4, #f59e0b, #10b981);
+  background-size: 400% 400%;
+  animation: marketing-ai-gradient-shift 15s ease infinite;
+}
+
+/* Floating Elements Animation */
+@keyframes marketing-ai-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.marketing-ai-stat-icon,
+.marketing-ai-feature-icon,
+.marketing-ai-value-icon {
+  animation: marketing-ai-float 3s ease-in-out infinite;
+}
+
+.marketing-ai-stat-icon {
+  animation-delay: 0s;
+}
+
+.marketing-ai-feature-icon {
+  animation-delay: 0.5s;
+}
+
+.marketing-ai-value-icon {
+  animation-delay: 1s;
+}
+
+/* Glow Effects */
+.marketing-ai-primary-btn:hover,
+.marketing-ai-add-btn:hover {
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
+}
+
+.marketing-ai-stat-item:hover .marketing-ai-stat-icon {
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
+}
+
+/* Particle Effect Simulation */
+.marketing-ai-hero-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.2), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.2), transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: marketing-ai-particles 20s linear infinite;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+@keyframes marketing-ai-particles {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-100px); }
+}
+
+/* 3D Card Effects */
+.marketing-ai-feature-card,
+.marketing-ai-team-card,
+.marketing-ai-testimonial-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.marketing-ai-feature-card:hover {
+  transform: translateY(-8px) rotateX(5deg) rotateY(2deg);
+}
+
+.marketing-ai-team-card:hover {
+  transform: translateY(-10px) rotateX(-5deg) rotateY(-2deg);
+}
+
+/* Glassmorphism Effects */
+.marketing-ai-about-container.dark .marketing-ai-stat-item,
+.marketing-ai-about-container.dark .marketing-ai-feature-card,
+.marketing-ai-about-container.dark .marketing-ai-team-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Text Animations */
+.marketing-ai-hero-title {
+  animation: marketing-ai-slideInUp 1s ease-out;
+}
+
+.marketing-ai-hero-subtitle {
+  animation: marketing-ai-slideInUp 1s ease-out 0.2s both;
+}
+
+.marketing-ai-hero-cta-buttons {
+  animation: marketing-ai-slideInUp 1s ease-out 0.4s both;
+}
+
+/* Interactive Hover States */
+.marketing-ai-timeline-content:hover {
+  transform: scale(1.02);
+  z-index: 10;
+}
+
+.marketing-ai-testimonial-card:hover {
+  transform: translateY(-5px) scale(1.02);
+}
+
+/* Advanced Grid Layouts */
+@supports (display: grid) {
+  .marketing-ai-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-gap: 2rem;
+  }
+  
+  .marketing-ai-team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-gap: 2rem;
+  }
+}
+
+/* CSS Custom Properties for Dynamic Theming */
+.marketing-ai-about-container[data-theme="blue"] {
+  --marketing-ai-primary-color: #3b82f6;
+  --marketing-ai-secondary-color: #06b6d4;
+}
+
+.marketing-ai-about-container[data-theme="purple"] {
+  --marketing-ai-primary-color: #8b5cf6;
+  --marketing-ai-secondary-color: #a855f7;
+}
+
+.marketing-ai-about-container[data-theme="green"] {
+  --marketing-ai-primary-color: #10b981;
+  --marketing-ai-secondary-color: #06b6d4;
+}
+
+/* Enhanced Button Styles */
+.marketing-ai-primary-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.marketing-ai-primary-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.marketing-ai-primary-btn:hover::before {
+  left: 100%;
+}
+
+/* Sticky Elements */
+.marketing-ai-admin-controls {
+  position: sticky;
+  top: 1rem;
+  z-index: 100;
+}
+
+/* Enhanced Animations with CSS Variables */
+.marketing-ai-feature-card {
+  --marketing-ai-card-rotation: 0deg;
+  transform: translateY(var(--marketing-ai-card-translate, 0px)) 
+             rotateX(var(--marketing-ai-card-rotation)) 
+             scale(var(--marketing-ai-card-scale, 1));
+}
+
+.marketing-ai-feature-card:hover {
+  --marketing-ai-card-translate: -8px;
+  --marketing-ai-card-rotation: 5deg;
+  --marketing-ai-card-scale: 1.02;
+}
+
+/* Performance Optimizations */
+.marketing-ai-feature-card,
+.marketing-ai-team-card,
+.marketing-ai-stat-item,
+.marketing-ai-timeline-item {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* End of CSS */about-container {
+  min-height: 100vh;
+  position: relative;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  transition: var(--marketing-ai-transition);
+}
+
+.marketing-ai-about-container.light {
+  background: var(--marketing-ai-light-bg);
+  color: var(--marketing-ai-light-text);
+}
+
+.marketing-ai-about-container.dark {
+  background: var(--marketing-ai-dark-bg);
+  color: var(--marketing-ai-dark-text);
+}
+
+.marketing-ai-container {
+  max-width: var(--marketing-ai-container-max);
+  margin: 0 auto;
+  padding: 0 var(--marketing-ai-container-padding);
+}
+
+/* Loading Styles */
+.marketing-ai-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 2rem;
+}
+
+.marketing-ai-loading-container.light {
+  background: var(--marketing-ai-light-bg);
+  color: var(--marketing-ai-light-text);
+}
+
+.marketing-ai-loading-container.dark {
+  background: var(--marketing-ai-dark-bg);
+  color: var(--marketing-ai-dark-text);
+}
+
+.marketing-ai-loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid transparent;
+  border-top: 4px solid var(--marketing-ai-primary-color);
+  border-radius: 50%;
+  animation: marketing-ai-spin 1s linear infinite;
+}
+
+.marketing-ai-loading-text {
+  font-size: 1.125rem;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+@keyframes marketing-ai-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Hero Section */
+.marketing-ai-hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--marketing-ai-primary-color) 0%, var(--marketing-ai-secondary-color) 100%);
+}
+
+.marketing-ai-hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.marketing-ai-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.marketing-ai-hero-content-wrapper {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  max-width: 800px;
+  padding: 0 2rem;
+  color: white;
+}
+
+.marketing-ai-hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+  background: linear-gradient(45deg, #ffffff, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.marketing-ai-hero-subtitle {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  margin-bottom: 3rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+

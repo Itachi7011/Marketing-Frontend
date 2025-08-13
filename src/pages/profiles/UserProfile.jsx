@@ -33,8 +33,19 @@ const ClientProfile = () => {
     const [userProfile, setUserProfile] = useState(null);
     const [activeTab, setActiveTab] = useState('personal');
     const [editingSection, setEditingSection] = useState(null);
-    const [formData, setFormData] = useState({});
     const [loading, setLoading] = useState(true);
+
+    const [formData, setFormData] = useState({
+        personalInfo: {},
+        business: {},
+        marketingProfile: {},
+        integrations: {},
+        targetAudience: {},
+        aiPreferences: {},
+        contentAssets: {},
+        billing: {},
+        security: {}
+    });
 
     // Fetch user profile data
     useEffect(() => {
@@ -44,26 +55,47 @@ const ClientProfile = () => {
     const fetchUserProfile = async () => {
         try {
             setLoading(true);
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                throw new Error('No authentication token found');
+            }
+
             const response = await fetch('/api/auth/userProfile', {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 }
             });
 
             if (response.ok) {
                 const data = await response.json();
+                console.log('Fetched profile data:', data);
                 setUserProfile(data);
-                setFormData(data);
+
+                // Set formData with proper structure
+                setFormData({
+                    personalInfo: data.personalInfo || {},
+                    business: data.business || {},
+                    marketingProfile: data.marketingProfile || {},
+                    integrations: data.integrations || {},
+                    targetAudience: data.targetAudience || {},
+                    aiPreferences: data.aiPreferences || {},
+                    contentAssets: data.contentAssets || {},
+                    billing: data.billing || {},
+                    security: data.security || {}
+                });
             } else {
-                throw new Error('Failed to fetch profile');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to fetch profile');
             }
         } catch (error) {
+            console.error('Fetch error:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Failed to load profile data'
+                text: error.message || 'Failed to load profile data'
             });
         } finally {
             setLoading(false);
@@ -76,52 +108,107 @@ const ClientProfile = () => {
 
     const handleSave = async (section) => {
         try {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                throw new Error('No authentication token found');
+            }
+
+            // Create the payload with the correct structure
+            const payload = {
+                [section]: formData[section]
+            };
+
+            console.log("Sending payload:", JSON.stringify(payload, null, 2)); // Better debug log
+
             const response = await fetch('/api/auth/userProfile', {
                 method: 'PUT',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    'Content-Type': 'application/json'
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(payload)
             });
 
+            let result;
+            const contentType = response.headers.get('content-type');
+
+            if (contentType && contentType.includes('application/json')) {
+                result = await response.json();
+            } else {
+                const text = await response.text();
+                console.error('Non-JSON response:', text);
+                throw new Error('Server returned non-JSON response');
+            }
+
+            console.log("Response:", result);
+
             if (response.ok) {
-                const updatedData = await response.json();
-                setUserProfile(updatedData);
+                // Update the userProfile state with the new data
+                setUserProfile(prev => ({
+                    ...prev,
+                    [section]: formData[section]
+                }));
                 setEditingSection(null);
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
-                    text: 'Profile updated successfully!'
+                    text: result.message || 'Profile updated successfully!',
+                    timer: 2000,
+                    showConfirmButton: false
                 });
             } else {
-                throw new Error('Failed to update profile');
+                throw new Error(result.message || 'Failed to update profile');
             }
         } catch (error) {
+            console.error('Update error:', error);
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Failed to update profile'
+                text: error.message || 'Failed to update profile'
             });
         }
     };
 
     const handleCancel = () => {
-        setFormData(userProfile);
+        // Reset formData to original userProfile data
+        if (userProfile) {
+            setFormData({
+                personalInfo: userProfile.personalInfo || {},
+                business: userProfile.business || {},
+                marketingProfile: userProfile.marketingProfile || {},
+                integrations: userProfile.integrations || {},
+                targetAudience: userProfile.targetAudience || {},
+                aiPreferences: userProfile.aiPreferences || {},
+                contentAssets: userProfile.contentAssets || {},
+                billing: userProfile.billing || {},
+                security: userProfile.security || {}
+            });
+        }
         setEditingSection(null);
     };
 
     const handleInputChange = (path, value) => {
+        console.log('Input change:', path, value); // Debug log
+
         const keys = path.split('.');
         const updatedData = { ...formData };
         let current = updatedData;
 
+        // Navigate to the correct nested object
         for (let i = 0; i < keys.length - 1; i++) {
-            if (!current[keys[i]]) current[keys[i]] = {};
+            if (!current[keys[i]]) {
+                current[keys[i]] = {};
+            }
             current = current[keys[i]];
         }
 
+        // Set the value
         current[keys[keys.length - 1]] = value;
+
+        console.log('Updated formData:', updatedData); // Debug log
         setFormData(updatedData);
     };
 
@@ -135,9 +222,15 @@ const ClientProfile = () => {
             current = current[keys[i]];
         }
 
-        if (!current[keys[keys.length - 1]]) current[keys[keys.length - 1]] = [];
-        current[keys[keys.length - 1]].push(item);
-        setFormData(updatedData);
+        if (!current[keys[keys.length - 1]]) {
+            current[keys[keys.length - 1]] = [];
+        }
+
+        // Only add if item is not empty and not already in array
+        if (item && item.trim() && !current[keys[keys.length - 1]].includes(item.trim())) {
+            current[keys[keys.length - 1]].push(item.trim());
+            setFormData(updatedData);
+        }
     };
 
     const handleArrayRemove = (path, index) => {
@@ -146,11 +239,14 @@ const ClientProfile = () => {
         let current = updatedData;
 
         for (let i = 0; i < keys.length - 1; i++) {
+            if (!current[keys[i]]) return; // Safety check
             current = current[keys[i]];
         }
 
-        current[keys[keys.length - 1]].splice(index, 1);
-        setFormData(updatedData);
+        if (current[keys[keys.length - 1]] && Array.isArray(current[keys[keys.length - 1]])) {
+            current[keys[keys.length - 1]].splice(index, 1);
+            setFormData(updatedData);
+        }
     };
 
     const tabs = [
@@ -178,6 +274,7 @@ const ClientProfile = () => {
         return (
             <div className={`client-profile-error ${isDarkMode ? 'dark' : 'light'}`}>
                 <p>Failed to load profile data</p>
+                <button onClick={fetchUserProfile}>Retry</button>
             </div>
         );
     }
@@ -216,8 +313,7 @@ const ClientProfile = () => {
                                 className={`profile-tab ${activeTab === tab.id ? 'active' : ''}`}
                                 onClick={() => setActiveTab(tab.id)}
                             >
-                                {/* <IconComponent size={20} /> */}
-                                <span style={{marginLeft:"-0.8rem"}}>{tab.label}</span>
+                                <span style={{ marginLeft: "-0.8rem" }}>{tab.label}</span>
                             </button>
                         );
                     })}
@@ -227,9 +323,9 @@ const ClientProfile = () => {
                     {activeTab === 'personal' && (
                         <PersonalInfoTab
                             data={userProfile.personalInfo}
-                            editing={editingSection === 'personal'}
-                            onEdit={() => handleEdit('personal')}
-                            onSave={() => handleSave('personal')}
+                            editing={editingSection === 'personalInfo'}
+                            onEdit={() => handleEdit('personalInfo')}
+                            onSave={() => handleSave('personalInfo')}
                             onCancel={handleCancel}
                             onChange={handleInputChange}
                             formData={formData.personalInfo}
@@ -251,9 +347,9 @@ const ClientProfile = () => {
                     {activeTab === 'marketing' && (
                         <MarketingTab
                             data={userProfile.marketingProfile}
-                            editing={editingSection === 'marketing'}
-                            onEdit={() => handleEdit('marketing')}
-                            onSave={() => handleSave('marketing')}
+                            editing={editingSection === 'marketingProfile'}
+                            onEdit={() => handleEdit('marketingProfile')}
+                            onSave={() => handleSave('marketingProfile')}
                             onCancel={handleCancel}
                             onChange={handleInputChange}
                             onArrayAdd={handleArrayAdd}
@@ -277,9 +373,9 @@ const ClientProfile = () => {
                     {activeTab === 'audience' && (
                         <AudienceTab
                             data={userProfile.targetAudience}
-                            editing={editingSection === 'audience'}
-                            onEdit={() => handleEdit('audience')}
-                            onSave={() => handleSave('audience')}
+                            editing={editingSection === 'targetAudience'}
+                            onEdit={() => handleEdit('targetAudience')}
+                            onSave={() => handleSave('targetAudience')}
                             onCancel={handleCancel}
                             onChange={handleInputChange}
                             onArrayAdd={handleArrayAdd}
@@ -291,9 +387,9 @@ const ClientProfile = () => {
                     {activeTab === 'ai' && (
                         <AIPreferencesTab
                             data={userProfile.aiPreferences}
-                            editing={editingSection === 'ai'}
-                            onEdit={() => handleEdit('ai')}
-                            onSave={() => handleSave('ai')}
+                            editing={editingSection === 'aiPreferences'}
+                            onEdit={() => handleEdit('aiPreferences')}
+                            onSave={() => handleSave('aiPreferences')}
                             onCancel={handleCancel}
                             onChange={handleInputChange}
                             formData={formData.aiPreferences}
@@ -303,9 +399,9 @@ const ClientProfile = () => {
                     {activeTab === 'content' && (
                         <ContentAssetsTab
                             data={userProfile.contentAssets}
-                            editing={editingSection === 'content'}
-                            onEdit={() => handleEdit('content')}
-                            onSave={() => handleSave('content')}
+                            editing={editingSection === 'contentAssets'}
+                            onEdit={() => handleEdit('contentAssets')}
+                            onSave={() => handleSave('contentAssets')}
                             onCancel={handleCancel}
                             onChange={handleInputChange}
                             onArrayAdd={handleArrayAdd}
@@ -496,7 +592,7 @@ const PersonalInfoTab = ({ data, editing, onEdit, onSave, onCancel, onChange, fo
     </div>
 );
 
-// Business Tab Component
+// Business Tab Component  
 const BusinessTab = ({ data, editing, onEdit, onSave, onCancel, onChange, formData }) => (
     <div className="tab-section">
         <div className="section-header">
@@ -690,7 +786,7 @@ const MarketingTab = ({ data, editing, onEdit, onSave, onCancel, onChange, onArr
                     >
                         <option value="">Select Role</option>
                         <option value="owner">Owner</option>
-                        <option value="cmio">CMO</option>
+                        <option value="cmo">CMO</option>
                         <option value="marketing-director">Marketing Director</option>
                         <option value="social-media-manager">Social Media Manager</option>
                         <option value="content-creator">Content Creator</option>
@@ -805,52 +901,259 @@ const MarketingTab = ({ data, editing, onEdit, onSave, onCancel, onChange, onArr
     </div>
 );
 
-// Add other tab components (IntegrationsTab, AudienceTab, etc.) here...
-// For brevity, I'll show the structure for a few more key tabs:
+const IntegrationsTab = ({ data, editing, onEdit, onSave, onCancel, onChange, formData }) => {
+    const [newIntegrationModal, setNewIntegrationModal] = useState(false);
+    const [selectedPlatform, setSelectedPlatform] = useState('');
 
-const IntegrationsTab = ({ data, editing, onEdit, onSave, onCancel, onChange, formData }) => (
-    <div className="tab-section">
-        <div className="section-header">
-            <h2>Platform Integrations</h2>
-            {!editing ? (
-                <button className="edit-btn" onClick={onEdit}>
-                    <Edit3 size={16} />
-                    Edit
-                </button>
-            ) : (
-                <div className="action-buttons">
-                    <button className="save-btn" onClick={onSave}>
-                        <Save size={16} />
-                        Save
+    const integrationPlatforms = {
+        // Social Media
+        facebook: { name: 'Facebook', category: 'Social Media', fields: ['pageId', 'pageName', 'accessToken'] },
+        instagram: { name: 'Instagram', category: 'Social Media', fields: ['username', 'businessId', 'accessToken'] },
+        twitter: { name: 'Twitter', category: 'Social Media', fields: ['userId', 'username', 'accessToken'] },
+        linkedin: { name: 'LinkedIn', category: 'Social Media', fields: ['companyId', 'accessToken'] },
+        tiktok: { name: 'TikTok', category: 'Social Media', fields: ['username', 'businessId', 'accessToken'] },
+
+        // Messaging
+        whatsapp: { name: 'WhatsApp Business', category: 'Messaging', fields: ['businessId'] },
+        telegram: { name: 'Telegram', category: 'Messaging', fields: ['botToken'] },
+        discord: { name: 'Discord', category: 'Messaging', fields: ['serverId'] },
+
+        // E-commerce
+        shopify: { name: 'Shopify', category: 'E-commerce', fields: ['storeName', 'accessToken'] },
+        woocommerce: { name: 'WooCommerce', category: 'E-commerce', fields: ['storeUrl', 'consumerKey', 'consumerSecret'] },
+        amazonSeller: { name: 'Amazon Seller', category: 'E-commerce', fields: ['sellerId'] },
+
+        // Advertising
+        googleAds: { name: 'Google Ads', category: 'Advertising', fields: ['customerId', 'refreshToken'] },
+        metaAds: { name: 'Meta Ads', category: 'Advertising', fields: ['adAccountId', 'accessToken'] },
+        tiktokAds: { name: 'TikTok Ads', category: 'Advertising', fields: ['adAccountId', 'accessToken'] },
+
+        // Analytics
+        googleAnalytics: { name: 'Google Analytics', category: 'Analytics', fields: ['propertyId', 'accessToken'] },
+        googleSearchConsole: { name: 'Google Search Console', category: 'Analytics', fields: ['siteUrl', 'accessToken'] },
+        googleMyBusiness: { name: 'Google My Business', category: 'Analytics', fields: ['locationId'] },
+
+        // Email Marketing
+        mailchimp: { name: 'Mailchimp', category: 'Email Marketing', fields: ['accountId', 'apiKey'] },
+        klaviyo: { name: 'Klaviyo', category: 'Email Marketing', fields: ['accountId', 'apiKey'] },
+
+        // CRM
+        hubspot: { name: 'HubSpot', category: 'CRM', fields: ['portalId', 'accessToken'] },
+        salesforce: { name: 'Salesforce', category: 'CRM', fields: ['instanceUrl', 'accessToken'] },
+
+        // Tools
+        zapier: { name: 'Zapier', category: 'Automation', fields: ['apiKey'] },
+        slack: { name: 'Slack', category: 'Communication', fields: ['teamId', 'accessToken'] }
+    };
+
+    const handleAddIntegration = () => {
+        if (!selectedPlatform) return;
+
+        const newIntegration = {
+            connected: false,
+            lastSynced: null
+        };
+
+        // Initialize fields based on platform
+        integrationPlatforms[selectedPlatform].fields.forEach(field => {
+            newIntegration[field] = '';
+        });
+
+        onChange(`integrations.${selectedPlatform}`, newIntegration);
+        setSelectedPlatform('');
+        setNewIntegrationModal(false);
+    };
+
+    const handleToggleConnection = (platform) => {
+        const currentStatus = formData?.[platform]?.connected || false;
+        onChange(`integrations.${platform}.connected`, !currentStatus);
+
+        if (!currentStatus) {
+            // If connecting, set lastSynced to now
+            onChange(`integrations.${platform}.lastSynced`, new Date().toISOString());
+        }
+    };
+
+    const handleRemoveIntegration = (platform) => {
+        // Get current integrations from formData or data
+        const currentIntegrations = { ...formData } || { ...data } || {};
+
+        // Remove the specific platform
+        delete currentIntegrations[platform];
+
+        // Update the entire integrations object
+        onChange('integrations', currentIntegrations);
+    };
+
+    const groupedPlatforms = Object.entries(integrationPlatforms).reduce((acc, [key, platform]) => {
+        if (!acc[platform.category]) acc[platform.category] = [];
+        acc[platform.category].push({ key, ...platform });
+        return acc;
+    }, {});
+
+    const availablePlatforms = Object.entries(integrationPlatforms).filter(
+        ([key]) => !data?.[key] && !formData?.[key]
+    );
+
+    return (
+        <div className="tab-section">
+            <div className="section-header">
+                <h2>Platform Integrations</h2>
+                {!editing ? (
+                    <button className="edit-btn" onClick={onEdit}>
+                        <Edit3 size={16} />
+                        Edit
                     </button>
-                    <button className="cancel-btn" onClick={onCancel}>
-                        <X size={16} />
-                        Cancel
+                ) : (
+                    <div className="action-buttons">
+                        <button className="save-btn" onClick={onSave}>
+                            <Save size={16} />
+                            Save
+                        </button>
+                        <button className="cancel-btn" onClick={onCancel}>
+                            <X size={16} />
+                            Cancel
+                        </button>
+                    </div>
+                )}
+            </div>
+
+            {editing && availablePlatforms.length > 0 && (
+                <div className="add-integration-section">
+                    <button
+                        className="add-integration-btn"
+                        onClick={() => setNewIntegrationModal(true)}
+                    >
+                        <Plus size={16} />
+                        Add New Integration
                     </button>
                 </div>
             )}
-        </div>
 
-        <div className="integrations-grid">
-            {Object.entries(data || {}).map(([platform, config]) => (
-                <div key={platform} className="integration-card">
-                    <div className="integration-header">
-                        <h3>{platform.charAt(0).toUpperCase() + platform.slice(1)}</h3>
-                        <div className={`connection-status ${config.connected ? 'connected' : 'disconnected'}`}>
-                            {config.connected ? 'Connected' : 'Not Connected'}
+            {newIntegrationModal && (
+                <div className="modal-overlay" onClick={() => setNewIntegrationModal(false)}>
+                    <div className="integration-modal" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3>Add New Integration</h3>
+                            <button onClick={() => setNewIntegrationModal(false)}>
+                                <X size={20} />
+                            </button>
+                        </div>
+                        <div className="modal-content">
+                            <label>Select Platform</label>
+                            <select
+                                value={selectedPlatform}
+                                onChange={(e) => setSelectedPlatform(e.target.value)}
+                                className="profile-select"
+                            >
+                                <option value="">Choose a platform</option>
+                                {availablePlatforms.map(([key, platform]) => (
+                                    <option key={key} value={key}>{platform.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                className="cancel-btn"
+                                onClick={() => setNewIntegrationModal(false)}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="save-btn"
+                                onClick={handleAddIntegration}
+                                disabled={!selectedPlatform}
+                            >
+                                Add Integration
+                            </button>
                         </div>
                     </div>
-                    {config.connected && config.lastSynced && (
-                        <p className="last-synced">Last synced: {new Date(config.lastSynced).toLocaleDateString()}</p>
-                    )}
-                    <button className="connect-btn">
-                        {config.connected ? 'Reconnect' : 'Connect'}
-                    </button>
                 </div>
-            ))}
+            )}
+
+            <div className="integrations-content">
+                {Object.entries(groupedPlatforms).map(([category, platforms]) => (
+                    <div key={category} className="integration-category">
+                        <h3 className="category-title">{category}</h3>
+                        <div className="integrations-grid">
+                            {platforms
+                                .filter(platform => data?.[platform.key] || formData?.[platform.key])
+                                .map(platform => {
+                                    const config = formData?.[platform.key] || data?.[platform.key] || {};
+                                    return (
+                                        <div key={platform.key} className="integration-card">
+                                            <div className="integration-header">
+                                                <h4>{platform.name}</h4>
+                                                <div className={`connection-status ${config.connected ? 'connected' : 'disconnected'}`}>
+                                                    {config.connected ? 'Connected' : 'Not Connected'}
+                                                </div>
+                                            </div>
+
+                                            {config.connected && config.lastSynced && (
+                                                <p className="last-synced">
+                                                    Last synced: {new Date(config.lastSynced).toLocaleDateString()}
+                                                </p>
+                                            )}
+
+                                            {editing && (
+                                                <div className="integration-fields">
+                                                    {platform.fields.map(field => (
+                                                        <div key={field} className="field-group">
+                                                            <label>{field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')}</label>
+                                                            <input
+                                                                type={field.includes('token') || field.includes('key') ? 'password' : 'text'}
+                                                                value={config[field] || ''}
+                                                                onChange={(e) => onChange(`integrations.${platform.key}.${field}`, e.target.value)}
+                                                                className="profile-input"
+                                                                placeholder={`Enter ${field}`}
+                                                            />
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+
+                                            <div className="integration-actions">
+                                                {editing && (
+                                                    <>
+                                                        <button
+                                                            className={`connect-btn ${config.connected ? 'disconnect' : 'connect'}`}
+                                                            onClick={() => handleToggleConnection(platform.key)}
+                                                        >
+                                                            {config.connected ? 'Disconnect' : 'Connect'}
+                                                        </button>
+                                                        <button
+                                                            className="remove-btn"
+                                                            onClick={() => handleRemoveIntegration(platform.key)}
+                                                            title={`Remove ${platform.name} integration`}
+                                                        >
+                                                            <X size={16} />
+                                                        </button>
+                                                    </>
+                                                )}
+                                                {!editing && (
+                                                    <button className="connect-btn">
+                                                        {config.connected ? 'Reconnect' : 'Connect'}
+                                                    </button>
+                                                )}
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            }
+                        </div>
+                    </div>
+                ))}
+
+                {(!data || Object.keys(data).length === 0) && (!formData || Object.keys(formData).length === 0) && (
+                    <div className="no-integrations">
+                        <p>No integrations configured yet.</p>
+                        {editing && <p>Click "Add New Integration" to get started.</p>}
+                    </div>
+                )}
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 const BillingTab = ({ data, editing, onEdit, onSave, onCancel, onChange, formData }) => (
     <div className="tab-section">
@@ -972,7 +1275,7 @@ const SecurityTab = ({ data, editing, onEdit, onSave, onCancel, onChange, onArra
                         <label>
                             <input
                                 type="checkbox"
-                                checked={data?.dataProcessingConsent?.gdpr || false}
+                                checked={formData?.dataProcessingConsent?.gdpr || false}
                                 onChange={(e) => onChange('security.dataProcessingConsent.gdpr', e.target.checked)}
                                 disabled={!editing}
                             />
@@ -983,7 +1286,7 @@ const SecurityTab = ({ data, editing, onEdit, onSave, onCancel, onChange, onArra
                         <label>
                             <input
                                 type="checkbox"
-                                checked={data?.dataProcessingConsent?.ccpa || false}
+                                checked={formData?.dataProcessingConsent?.ccpa || false}
                                 onChange={(e) => onChange('security.dataProcessingConsent.ccpa', e.target.checked)}
                                 disabled={!editing}
                             />
@@ -1361,106 +1664,415 @@ const AIPreferencesTab = ({ data, editing, onEdit, onSave, onCancel, onChange, f
     </div>
 );
 
-const ContentAssetsTab = ({ data, editing, onEdit, onSave, onCancel, onChange, onArrayAdd, onArrayRemove, formData }) => (
-    <div className="tab-section">
-        <div className="section-header">
-            <h2>Content Assets</h2>
-            {!editing ? (
-                <button className="edit-btn" onClick={onEdit}>
-                    <Edit3 size={16} />
-                    Edit
-                </button>
-            ) : (
-                <div className="action-buttons">
-                    <button className="save-btn" onClick={onSave}>
-                        <Save size={16} />
-                        Save
-                    </button>
-                    <button className="cancel-btn" onClick={onCancel}>
-                        <X size={16} />
-                        Cancel
-                    </button>
-                </div>
-            )}
-        </div>
+const ContentAssetsTab = ({ data, editing, onEdit, onSave, onCancel, onChange, onArrayAdd, onArrayRemove, formData }) => {
+    const [assetModal, setAssetModal] = useState(false);
+    const [templateModal, setTemplateModal] = useState(false);
+    const [newAsset, setNewAsset] = useState({
+        type: 'image',
+        url: '',
+        description: '',
+        tags: []
+    });
+    const [newTemplate, setNewTemplate] = useState({
+        name: '',
+        type: 'post',
+        content: '',
+        variables: []
+    });
+    const [newTag, setNewTag] = useState('');
+    const [newVariable, setNewVariable] = useState('');
 
-        <div className="content-sections">
-            <div className="content-section">
-                <h3>Brand Assets</h3>
-                <div className="assets-grid">
-                    {data?.brandAssets?.map((asset, index) => (
-                        <div key={index} className="asset-card">
-                            <div className="asset-preview">
-                                {asset.type === 'image' ? (
-                                    <Image size={40} />
-                                ) : asset.type === 'video' ? (
-                                    <Video size={40} />
-                                ) : asset.type === 'audio' ? (
-                                    <Music size={40} />
-                                ) : (
-                                    <FileText size={40} />
-                                )}
+    const handleAddAsset = () => {
+        if (!newAsset.description.trim()) {
+            alert('Please provide a description for the asset');
+            return;
+        }
+
+        const assetToAdd = {
+            ...newAsset,
+            publicId: `asset_${Date.now()}`,
+            created: new Date().toISOString()
+        };
+
+        // Get current brand assets and add the new one
+        const currentAssets = formData?.brandAssets || data?.brandAssets || [];
+        const updatedAssets = [...currentAssets, assetToAdd];
+
+        // Update the contentAssets.brandAssets path
+        onChange('contentAssets.brandAssets', updatedAssets);
+
+        // Reset form
+        setNewAsset({
+            type: 'image',
+            url: '',
+            description: '',
+            tags: []
+        });
+        setAssetModal(false);
+    };
+
+    const handleAddTemplate = () => {
+        if (!newTemplate.name.trim() || !newTemplate.content.trim()) {
+            alert('Please provide both name and content for the template');
+            return;
+        }
+
+        const templateToAdd = {
+            ...newTemplate,
+            lastUsed: null
+        };
+
+        // Get current templates and add the new one
+        const currentTemplates = formData?.contentTemplates || data?.contentTemplates || [];
+        const updatedTemplates = [...currentTemplates, templateToAdd];
+
+        // Update the contentAssets.contentTemplates path
+        onChange('contentAssets.contentTemplates', updatedTemplates);
+
+        // Reset form
+        setNewTemplate({
+            name: '',
+            type: 'post',
+            content: '',
+            variables: []
+        });
+        setTemplateModal(false);
+    };
+
+    const addTagToAsset = () => {
+        if (newTag.trim() && !newAsset.tags.includes(newTag.trim())) {
+            setNewAsset(prev => ({
+                ...prev,
+                tags: [...prev.tags, newTag.trim()]
+            }));
+            setNewTag('');
+        }
+    };
+
+    const removeTagFromAsset = (index) => {
+        setNewAsset(prev => ({
+            ...prev,
+            tags: prev.tags.filter((_, i) => i !== index)
+        }));
+    };
+
+    const addVariableToTemplate = () => {
+        if (newVariable.trim() && !newTemplate.variables.includes(newVariable.trim())) {
+            setNewTemplate(prev => ({
+                ...prev,
+                variables: [...prev.variables, newVariable.trim()]
+            }));
+            setNewVariable('');
+        }
+    };
+
+    const removeVariableFromTemplate = (index) => {
+        setNewTemplate(prev => ({
+            ...prev,
+            variables: prev.variables.filter((_, i) => i !== index)
+        }));
+    };
+
+    return (
+        <div className="tab-section">
+            <div className="section-header">
+                <h2>Content Assets</h2>
+                {!editing ? (
+                    <button className="edit-btn" onClick={onEdit}>
+                        <Edit3 size={16} />
+                        Edit
+                    </button>
+                ) : (
+                    <div className="action-buttons">
+                        <button className="save-btn" onClick={onSave}>
+                            <Save size={16} />
+                            Save
+                        </button>
+                        <button className="cancel-btn" onClick={onCancel}>
+                            <X size={16} />
+                            Cancel
+                        </button>
+                    </div>
+                )}
+            </div>
+
+            {/* Asset Modal */}
+            {assetModal && (
+                <div className="modal-overlay" onClick={() => setAssetModal(false)}>
+                    <div className="asset-modal" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3>Add Brand Asset</h3>
+                            <button onClick={() => setAssetModal(false)}>
+                                <X size={20} />
+                            </button>
+                        </div>
+                        <div className="modal-content">
+                            <div className="form-group">
+                                <label>Asset Type</label>
+                                <select
+                                    value={newAsset.type}
+                                    onChange={(e) => setNewAsset(prev => ({ ...prev, type: e.target.value }))}
+                                    className="profile-select"
+                                >
+                                    <option value="image">Image</option>
+                                    <option value="video">Video</option>
+                                    <option value="logo">Logo</option>
+                                    <option value="document">Document</option>
+                                </select>
                             </div>
-                            <div className="asset-info">
-                                <div className="asset-description">{asset.description || 'No description'}</div>
-                                <div className="asset-tags">
-                                    {asset.tags?.map((tag, tagIndex) => (
-                                        <span key={tagIndex} className="asset-tag">{tag}</span>
+
+                            <div className="form-group">
+                                <label>URL</label>
+                                <input
+                                    type="url"
+                                    value={newAsset.url}
+                                    onChange={(e) => setNewAsset(prev => ({ ...prev, url: e.target.value }))}
+                                    className="profile-input"
+                                    placeholder="https://example.com/asset.jpg"
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Description</label>
+                                <textarea
+                                    value={newAsset.description}
+                                    onChange={(e) => setNewAsset(prev => ({ ...prev, description: e.target.value }))}
+                                    className="profile-textarea"
+                                    rows={3}
+                                    placeholder="Describe this asset..."
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Tags</label>
+                                <div className="tag-input-group">
+                                    <input
+                                        type="text"
+                                        value={newTag}
+                                        onChange={(e) => setNewTag(e.target.value)}
+                                        className="profile-input"
+                                        placeholder="Add tag"
+                                        onKeyPress={(e) => e.key === 'Enter' && addTagToAsset()}
+                                    />
+                                    <button type="button" onClick={addTagToAsset}>Add</button>
+                                </div>
+                                <div className="tag-list">
+                                    {newAsset.tags.map((tag, index) => (
+                                        <span key={index} className="tag">
+                                            {tag}
+                                            <button onClick={() => removeTagFromAsset(index)}>
+                                                <X size={12} />
+                                            </button>
+                                        </span>
                                     ))}
                                 </div>
                             </div>
-                            {editing && (
-                                <button
-                                    className="remove-asset-btn"
-                                    onClick={() => onArrayRemove('contentAssets.brandAssets', index)}
-                                >
-                                    <X size={16} />
-                                </button>
-                            )}
                         </div>
-                    )) || <div className="no-assets">No brand assets uploaded</div>}
-                    {editing && (
-                        <button className="add-asset-btn">
-                            <Plus size={20} />
-                            Add Asset
-                        </button>
-                    )}
+                        <div className="modal-footer">
+                            <button className="cancel-btn" onClick={() => setAssetModal(false)}>
+                                Cancel
+                            </button>
+                            <button className="save-btn" onClick={handleAddAsset}>
+                                Add Asset
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            )}
 
-            <div className="content-section">
-                <h3>Content Templates</h3>
-                <div className="templates-list">
-                    {data?.contentTemplates?.map((template, index) => (
-                        <div key={index} className="template-card">
-                            <div className="template-header">
-                                <h4>{template.name}</h4>
-                                <span className="template-type">{template.type}</span>
-                            </div>
-                            <div className="template-content">{template.content?.substring(0, 100)}...</div>
-                            <div className="template-meta">
-                                Last used: {template.lastUsed ? new Date(template.lastUsed).toLocaleDateString() : 'Never'}
-                            </div>
-                            {editing && (
-                                <button
-                                    className="remove-template-btn"
-                                    onClick={() => onArrayRemove('contentAssets.contentTemplates', index)}
-                                >
-                                    <X size={16} />
-                                </button>
-                            )}
+            {/* Template Modal */}
+            {templateModal && (
+                <div className="modal-overlay" onClick={() => setTemplateModal(false)}>
+                    <div className="template-modal" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3>Add Content Template</h3>
+                            <button onClick={() => setTemplateModal(false)}>
+                                <X size={20} />
+                            </button>
                         </div>
-                    )) || <div className="no-templates">No content templates created</div>}
-                    {editing && (
-                        <button className="add-template-btn">
-                            <Plus size={16} />
-                            Add Template
-                        </button>
-                    )}
+                        <div className="modal-content">
+                            <div className="form-group">
+                                <label>Template Name</label>
+                                <input
+                                    type="text"
+                                    value={newTemplate.name}
+                                    onChange={(e) => setNewTemplate(prev => ({ ...prev, name: e.target.value }))}
+                                    className="profile-input"
+                                    placeholder="e.g., Social Media Post Template"
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Template Type</label>
+                                <select
+                                    value={newTemplate.type}
+                                    onChange={(e) => setNewTemplate(prev => ({ ...prev, type: e.target.value }))}
+                                    className="profile-select"
+                                >
+                                    <option value="post">Social Media Post</option>
+                                    <option value="ad">Advertisement</option>
+                                    <option value="email">Email</option>
+                                    <option value="landing-page">Landing Page</option>
+                                </select>
+                            </div>
+
+                            <div className="form-group">
+                                <label>Content</label>
+                                <textarea
+                                    value={newTemplate.content}
+                                    onChange={(e) => setNewTemplate(prev => ({ ...prev, content: e.target.value }))}
+                                    className="profile-textarea"
+                                    rows={6}
+                                    placeholder="Template content with variables like {{company_name}}, {{product_name}}"
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Variables</label>
+                                <div className="tag-input-group">
+                                    <input
+                                        type="text"
+                                        value={newVariable}
+                                        onChange={(e) => setNewVariable(e.target.value)}
+                                        className="profile-input"
+                                        placeholder="e.g., company_name"
+                                        onKeyPress={(e) => e.key === 'Enter' && addVariableToTemplate()}
+                                    />
+                                    <button type="button" onClick={addVariableToTemplate}>Add</button>
+                                </div>
+                                <div className="tag-list">
+                                    {newTemplate.variables.map((variable, index) => (
+                                        <span key={index} className="tag">
+                                            {variable}
+                                            <button onClick={() => removeVariableFromTemplate(index)}>
+                                                <X size={12} />
+                                            </button>
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="cancel-btn" onClick={() => setTemplateModal(false)}>
+                                Cancel
+                            </button>
+                            <button className="save-btn" onClick={handleAddTemplate}>
+                                Add Template
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <div className="content-sections">
+                <div className="content-section">
+                    <div className="section-header-inline">
+                        <h3>Brand Assets</h3>
+                        {editing && (
+                            <button className="add-asset-btn" onClick={() => setAssetModal(true)}>
+                                <Plus size={16} />
+                                Add Asset
+                            </button>
+                        )}
+                    </div>
+                    <div className="assets-grid">
+                        {(formData?.brandAssets || data?.brandAssets || []).map((asset, index) => (
+                            <div key={index} className="asset-card">
+                                <div className="asset-preview">
+                                    {asset.type === 'image' || asset.type === 'logo' ? (
+                                        asset.url ? (
+                                            <img src={asset.url} alt={asset.description} className="asset-thumbnail" />
+                                        ) : (
+                                            <Image size={40} />
+                                        )
+                                    ) : asset.type === 'video' ? (
+                                        <Video size={40} />
+                                    ) : (
+                                        <FileText size={40} />
+                                    )}
+                                </div>
+                                <div className="asset-info">
+                                    <div className="asset-description">{asset.description || 'No description'}</div>
+                                    <div className="asset-type">{asset.type}</div>
+                                    <div className="asset-tags">
+                                        {asset.tags?.map((tag, tagIndex) => (
+                                            <span key={tagIndex} className="asset-tag">{tag}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                                {editing && (
+                                    <button
+                                        className="remove-asset-btn"
+                                        onClick={() => {
+                                            const currentAssets = formData?.brandAssets || data?.brandAssets || [];
+                                            const updatedAssets = currentAssets.filter((_, i) => i !== index);
+                                            onChange('contentAssets.brandAssets', updatedAssets);
+                                        }}
+                                    >
+                                        <X size={16} />
+                                    </button>
+                                )}
+                            </div>
+                        ))}
+                        {(!data?.brandAssets || data.brandAssets.length === 0) &&
+                            (!formData?.brandAssets || formData.brandAssets.length === 0) && (
+                                <div className="no-assets">No brand assets uploaded yet</div>
+                            )}
+                    </div>
+                </div>
+
+                <div className="content-section">
+                    <div className="section-header-inline">
+                        <h3>Content Templates</h3>
+                        {editing && (
+                            <button className="add-template-btn" onClick={() => setTemplateModal(true)}>
+                                <Plus size={16} />
+                                Add Template
+                            </button>
+                        )}
+                    </div>
+                    <div className="templates-list">
+                        {(formData?.contentTemplates || data?.contentTemplates || []).map((template, index) => (
+                            <div key={index} className="template-card">
+                                <div className="template-header">
+                                    <h4>{template.name}</h4>
+                                    <span className="template-type">{template.type}</span>
+                                </div>
+                                <div className="template-content">
+                                    {template.content?.substring(0, 150)}
+                                    {template.content?.length > 150 && '...'}
+                                </div>
+                                <div className="template-variables">
+                                    {template.variables?.map((variable, varIndex) => (
+                                        <span key={varIndex} className="variable-tag">{{ variable }}</span>
+                                    ))}
+                                </div>
+                                <div className="template-meta">
+                                    Last used: {template.lastUsed ? new Date(template.lastUsed).toLocaleDateString() : 'Never'}
+                                </div>
+                                {editing && (
+                                    <button
+                                        className="remove-template-btn"
+                                        onClick={() => {
+                                            const currentTemplates = formData?.contentTemplates || data?.contentTemplates || [];
+                                            const updatedTemplates = currentTemplates.filter((_, i) => i !== index);
+                                            onChange('contentAssets.contentTemplates', updatedTemplates);
+                                        }}
+                                    >
+                                        <X size={16} />
+                                    </button>
+                                )}
+                            </div>
+                        ))}
+                        {(!data?.contentTemplates || data.contentTemplates.length === 0) &&
+                            (!formData?.contentTemplates || formData.contentTemplates.length === 0) && (
+                                <div className="no-templates">No content templates created yet</div>
+                            )}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 export default ClientProfile;

@@ -75,15 +75,14 @@
   --cp-gradient-accent: linear-gradient(135deg, #34d399 0%, #10b981 100%);
 }
 
-.client-profile-error{
+.client-profile-error {
   padding: 10rem;
   margin-top: 5rem;
 }
 
-.dark .client-profile-error{
+.dark .client-profile-error {
   color: var(--cp-text-primary);
-    background: var(--cp-bg-primary);
-
+  background: var(--cp-bg-primary);
 }
 
 /* Base Styles */
@@ -373,6 +372,7 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  margin-left: 5%;
 }
 
 .edit-btn {
@@ -406,6 +406,177 @@
   background: var(--cp-error-color);
   color: var(--cp-text-inverse);
   transform: translateY(-2px);
+}
+
+/* Icon sizing fixes */
+.edit-btn svg,
+.save-btn svg,
+.cancel-btn svg,
+.add-integration-btn svg,
+.add-asset-btn svg,
+.add-template-btn svg,
+.connect-btn svg,
+.remove-btn svg,
+.remove-asset-btn svg,
+.remove-template-btn svg {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.save-btn svg,
+.cancel-btn svg{
+      width: 30px !important;
+    height: 30px !important;
+}
+
+/* Button styling improvements */
+.edit-btn,
+.save-btn,
+.cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.edit-btn {
+    background-color: #6c757d;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #5a6268;
+}
+
+.save-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #218838;
+}
+
+.cancel-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #c82333;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+/* Integration specific button styles */
+.connect-btn,
+.remove-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.connect-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.connect-btn.disconnect {
+    background-color: #dc3545;
+}
+
+.connect-btn:hover {
+    opacity: 0.9;
+}
+
+.remove-btn {
+    background-color: #6c757d;
+    color: white;
+    padding: 6px;
+}
+
+.remove-btn:hover {
+    background-color: #5a6268;
+}
+
+/* Content assets button styles */
+.add-asset-btn,
+.add-template-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-asset-btn:hover,
+.add-template-btn:hover {
+    background-color: #138496;
+}
+
+.remove-asset-btn,
+.remove-template-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.remove-asset-btn:hover,
+.remove-template-btn:hover {
+    background-color: #c82333;
+}
+
+/* Asset and template card positioning */
+.asset-card,
+.template-card {
+    position: relative;
+}
+
+/* Dark mode adjustments */
+.dark .edit-btn,
+.dark .save-btn,
+.dark .cancel-btn,
+.dark .connect-btn,
+.dark .remove-btn,
+.dark .add-asset-btn,
+.dark .add-template-btn,
+.dark .add-integration-btn {
+    border: 1px solid #4a5568;
+}
+
+.dark .edit-btn {
+    background-color: #4a5568;
+}
+
+.dark .edit-btn:hover {
+    background-color: #2d3748;
 }
 
 /* Form Grid */
@@ -2309,4 +2480,209 @@
   .add-tag-btn {
     font-size: 0.8rem;
   }
+}
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.integration-modal,
+.asset-modal,
+.template-modal {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 12px;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+/* Integration specific styles */
+.integration-category {
+  margin-bottom: 32px;
+}
+
+.category-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 8px;
+}
+
+.integration-fields {
+  margin: 16px 0;
+}
+
+.field-group {
+  margin-bottom: 12px;
+}
+
+.field-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.integration-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.connect-btn.disconnect {
+  background-color: #dc3545;
+}
+
+.remove-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Content Assets specific styles */
+.section-header-inline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tag-input-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tag-input-group input {
+  flex: 1;
+}
+
+.tag-input-group button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.asset-thumbnail {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.asset-type {
+  font-size: 0.8rem;
+  color: #666;
+  text-transform: capitalize;
+}
+
+.variable-tag {
+  background-color: #e9ecef;
+  color: #495057;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-family: monospace;
+  margin-right: 4px;
+}
+
+.no-integrations {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.add-integration-section {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.add-integration-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.add-integration-btn:hover {
+  background-color: #218838;
+}
+
+/* Dark mode support */
+.dark .integration-modal,
+.dark .asset-modal,
+.dark .template-modal {
+  background: #2d3748;
+  color: white;
+}
+
+.dark .modal-header,
+.dark .modal-footer {
+  border-color: #4a5568;
+}
+
+.dark .category-title {
+  color: #e2e8f0;
+  border-color: #4a5568;
+}
+
+.dark .field-group label {
+  color: #e2e8f0;
+}
+
+.dark .variable-tag {
+  background-color: #4a5568;
+  color: #e2e8f0;
+}
+
+.dark .asset-type {
+  color: #a0aec0;
+}
+
+.dark .no-integrations {
+  color: #a0aec0;
 }

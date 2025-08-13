@@ -10,6 +10,8 @@ import './CSS/Footer.css'
 import './CSS/Signup.css'
 import './CSS/EmailVerification.css'
 import './CSS/Login.css'
+import './CSS/AboutUs.css'
+import './CSS/ContactUs.css'
 import './CSS/UserProfile.css'
 
 
@@ -19,6 +21,8 @@ import Signup from './pages/auth/Signup';
 import EmailVerification from './pages/auth/EmailVerification';
 import Login from './pages/auth/Login';
 import UserProfile from './pages/profiles/UserProfile';
+import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
 
 export const UserContext = createContext();
 
@@ -43,6 +47,8 @@ function App() {
             <Route path="/EmailVerification" element={<EmailVerification />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/UserProfile" element={<UserProfile />} />
+            <Route path="/AboutUs" element={<AboutUs />} />
+            <Route path="/ContactUs" element={<ContactUs />} />
 
 
 
