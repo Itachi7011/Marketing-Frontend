@@ -19,7 +19,9 @@ import './CSS/DigitalMarketing/SearchMarketing.css'
 import './CSS/DigitalMarketing/ContentCreation.css'
 import './CSS/DigitalMarketing/ScheduleDemo.css'
 
+import './CSS/admin/AdminNavbar.css'
 import './CSS/admin/AdminSidebar.css'
+import './CSS/admin/UsersList.css'
 
 
 import Navbar from './components/layout/Navbar';
@@ -34,7 +36,9 @@ import SearchMarketing from './pages/digitalMarketing/SearchMarketing';
 import ContentCreation from './pages/digitalMarketing/ContentCreation';
 import ScheduleDemo from './pages/digitalMarketing/ScheduleDemo';
 
+import AdminNavbar from './pages/admin/layout/AdminNavbar';
 import AdminSidebar from './pages/admin/layout/AdminSidebar';
+import UsersList from './pages/admin/lists/UsersList';
 
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
@@ -46,7 +50,6 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const { isDarkMode } = useContext(ThemeContext);
-  console.log(state)
 
   return (
     <div className={isDarkMode ? 'dark' : 'light'}>
@@ -55,6 +58,7 @@ function App() {
         <Router>
 
           <Navbar />
+          <AdminNavbar />
           <AdminSidebar />
           <Routes>
 
@@ -72,7 +76,7 @@ function App() {
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/ContactUs" element={<ContactUs />} />
 
-            {/* <Route path="/AdminSidebar" element={<AdminSidebar />} /> */}
+            <Route path="/admin/UsersList" element={<UsersList />} />
 
 
 

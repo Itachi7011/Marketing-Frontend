@@ -34,7 +34,6 @@ const PremiumNavbar = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Navbars Fetched profile data:', data);
         setUserProfile(data);
 
 
@@ -358,7 +357,6 @@ const PremiumNavbar = () => {
     ));
   };
 
-console.log("profile's data is", userProfile?.personalInfo?.userType)
 
   if (userProfile?.personalInfo?.userType === "admin") {
     return (<></>)

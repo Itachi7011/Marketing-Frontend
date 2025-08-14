@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 
+
 const Footer = () => {
     const { isDarkMode } = useContext(ThemeContext);
     const [scrolled, setScrolled] = useState(false);

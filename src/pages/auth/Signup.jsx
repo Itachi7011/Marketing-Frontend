@@ -16,6 +16,7 @@ const SignupPage = () => {
         firstName: '',
         lastName: '',
         email: '',
+        gender: '',
         phone: '',
         password: '',
         confirmPassword: '',
@@ -37,6 +38,13 @@ const SignupPage = () => {
     });
 
     const [errors, setErrors] = useState({});
+
+    const genderOptions = [
+        { value: 'male', label: 'Male' },
+        { value: 'female', label: 'Female' },
+        { value: 'otehrs', label: 'Otehrs' },
+
+    ];
 
     const industries = [
         { value: 'ecommerce', label: 'E-commerce' },
@@ -286,6 +294,28 @@ const SignupPage = () => {
                 </div>
             </div>
 
+
+            <div className="signup-input-group">
+                <label className="signup-input-label" htmlFor="industry">
+                    Gender
+                </label>
+                <select
+                    id="genderOptions"
+                    name="genderOptions"
+                    className={`signup-select-field ${errors.genderOptions ? 'error' : ''}`}
+                    value={formData.genderOptions}
+                    onChange={handleInputChange}
+                >
+                    <option value="">Select your Gender</option>
+                    {genderOptions.map(genderOptions => (
+                        <option key={genderOptions.value} value={genderOptions.value}>
+                            {genderOptions.label}
+                        </option>
+                    ))}
+                </select>
+                {errors.genderOptions && <span className="signup-error-text">{errors.genderOptions}</span>}
+            </div>
+
             <div className="signup-input-group">
                 <label className="signup-input-label" htmlFor="email">
                     <Mail size={16} />
@@ -318,6 +348,7 @@ const SignupPage = () => {
                     placeholder="+1 (555) 123-4567"
                 />
             </div>
+
 
             <div className="signup-form-grid">
                 <div className="signup-input-group">
