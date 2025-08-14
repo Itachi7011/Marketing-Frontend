@@ -114,7 +114,7 @@ const MarketingAISidebar = () => {
             icon: <TrendingUp className="marketing-ai-menu-icon" />,
             dropdown: [
                 { title: 'Users List', icon: <PieChart className="marketing-ai-submenu-icon" />, href: '/admin/UsersList' },
-                { title: 'Traffic Analysis', icon: <BarChart3 className="marketing-ai-submenu-icon" />, href: '/admin/analytics/traffic' },
+                { title: 'Scheduled Demos List', icon: <BarChart3 className="marketing-ai-submenu-icon" />, href: '/admin/ScheduledDemosList' },
                 { title: 'Conversion Tracking', icon: <Target className="marketing-ai-submenu-icon" />, href: '/admin/analytics/conversions' },
                 { title: 'ROI Calculator', icon: <TrendingUp className="marketing-ai-submenu-icon" />, href: '/admin/analytics/roi' }
             ]

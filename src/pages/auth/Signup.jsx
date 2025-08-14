@@ -42,8 +42,7 @@ const SignupPage = () => {
     const genderOptions = [
         { value: 'male', label: 'Male' },
         { value: 'female', label: 'Female' },
-        { value: 'otehrs', label: 'Otehrs' },
-
+        { value: 'others', label: 'Others' },  // Fixed typo here
     ];
 
     const industries = [
@@ -296,24 +295,24 @@ const SignupPage = () => {
 
 
             <div className="signup-input-group">
-                <label className="signup-input-label" htmlFor="industry">
+                <label className="signup-input-label" htmlFor="gender">
                     Gender
                 </label>
                 <select
-                    id="genderOptions"
-                    name="genderOptions"
-                    className={`signup-select-field ${errors.genderOptions ? 'error' : ''}`}
-                    value={formData.genderOptions}
+                    id="gender"
+                    name="gender"  // Changed from genderOptions to gender
+                    className={`signup-select-field ${errors.gender ? 'error' : ''}`}
+                    value={formData.gender}  // Changed from genderOptions to gender
                     onChange={handleInputChange}
                 >
                     <option value="">Select your Gender</option>
-                    {genderOptions.map(genderOptions => (
-                        <option key={genderOptions.value} value={genderOptions.value}>
-                            {genderOptions.label}
+                    {genderOptions.map(option => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
                         </option>
                     ))}
                 </select>
-                {errors.genderOptions && <span className="signup-error-text">{errors.genderOptions}</span>}
+                {errors.gender && <span className="signup-error-text">{errors.gender}</span>}
             </div>
 
             <div className="signup-input-group">

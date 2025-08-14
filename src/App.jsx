@@ -39,6 +39,7 @@ import ScheduleDemo from './pages/digitalMarketing/ScheduleDemo';
 import AdminNavbar from './pages/admin/layout/AdminNavbar';
 import AdminSidebar from './pages/admin/layout/AdminSidebar';
 import UsersList from './pages/admin/lists/UsersList';
+import ScheduledDemosList from './pages/admin/lists/ScheduledDemosList';
 
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
@@ -77,6 +78,7 @@ function App() {
             <Route path="/ContactUs" element={<ContactUs />} />
 
             <Route path="/admin/UsersList" element={<UsersList />} />
+            <Route path="/admin/ScheduledDemosList" element={<ScheduledDemosList />} />
 
 
 

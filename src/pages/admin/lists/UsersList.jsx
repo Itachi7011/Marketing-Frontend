@@ -1,5 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ThemeContext } from '../../../context/ThemeContext';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import Swal from 'sweetalert2';
 
 const UsersList = () => {
     const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
@@ -85,12 +88,246 @@ const UsersList = () => {
         setShowEditModal(true);
     };
 
-    const handleExportPDF = () => {
-        console.log('Exporting to PDF...');
+    const handleExportCSV = () => {
+        // Get all users (not just current page)
+        const usersToExport = sortedUsers;
+
+        // Define CSV headers
+        const headers = [
+            'Name', 'Email', 'User Type', 'Plan', 'Status',
+            'Company', 'Industry', 'Role', 'Experience Level',
+            'Last Login', 'Join Date'
+        ];
+
+        // Map user data to CSV rows
+        const rows = usersToExport.map(user => [
+            `"${getSafeValue(user, 'personalInfo.firstName')} ${getSafeValue(user, 'personalInfo.lastName')}"`,
+            `"${getSafeValue(user, 'auth.email')}"`,
+            `"${getSafeValue(user, 'personalInfo.userType')}"`,
+            `"${getSafeValue(user, 'billing.plan')}"`,
+            `"${getSafeValue(user, 'status')}"`,
+            `"${getSafeValue(user, 'business.companyName')}"`,
+            `"${getSafeValue(user, 'business.industry')}"`,
+            `"${getSafeValue(user, 'marketingProfile.role')}"`,
+            `"${getSafeValue(user, 'marketingProfile.experienceLevel')}"`,
+            `"${new Date(getSafeValue(user, 'activity.lastLogin')).toLocaleDateString()}"`,
+            `"${new Date(getSafeValue(user, 'metadata.createdAt')).toLocaleDateString()}"`
+        ]);
+
+        // Combine headers and rows
+        const csvContent = [
+            headers.join(','),
+            ...rows.map(row => row.join(','))
+        ].join('\n');
+
+        // Create download link
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', `users_export_${new Date().toISOString().slice(0, 10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     };
 
-    const handleExportCSV = () => {
-        console.log('Exporting to CSV...');
+    const handleExportPDF = () => {
+        try {
+            const doc = new jsPDF({
+                orientation: "landscape",
+                unit: "mm",
+                format: "a4"
+            });
+
+            // Document metadata
+            doc.setProperties({
+                title: "Complete Users Export",
+                subject: "Detailed user data export",
+                author: "Marketing AI"
+            });
+
+            // Main title
+            doc.setFontSize(22);
+            doc.setFont("helvetica", "bold");
+            doc.text("COMPLETE USERS EXPORT", 105, 20, { align: "center" });
+
+            // Subtitle
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(100);
+            doc.text(`Generated on ${new Date().toLocaleString()} | Page 1`, 105, 27, { align: "center" });
+
+            // Prepare all user data
+            const allUserData = sortedUsers.map(user => ({
+                // Personal Info
+                name: `${getSafeValue(user, "personalInfo.firstName")} ${getSafeValue(user, "personalInfo.lastName")}`,
+                email: getSafeValue(user, "auth.email"),
+                phone: getSafeValue(user, "auth.phone"),
+                userType: getSafeValue(user, "personalInfo.userType"),
+                timezone: getSafeValue(user, "personalInfo.timezone"),
+
+                // Account Status
+                status: getSafeValue(user, "status"),
+                plan: getSafeValue(user, "billing.plan"),
+                emailVerified: getSafeValue(user, "auth.emailVerified") ? "Yes" : "No",
+                blocked: getSafeValue(user, "isBlocked") ? "Yes" : "No",
+
+                // Business Info
+                company: getSafeValue(user, "business.companyName"),
+                industry: getSafeValue(user, "business.industry"),
+                companySize: getSafeValue(user, "business.companySize"),
+                website: getSafeValue(user, "business.website"),
+
+                // Marketing Profile
+                role: getSafeValue(user, "marketingProfile.role"),
+                experience: getSafeValue(user, "marketingProfile.experienceLevel"),
+                budget: getSafeValue(user, "marketingProfile.monthlyAdBudget"),
+
+                // Dates
+                joined: new Date(getSafeValue(user, "metadata.createdAt")).toLocaleDateString(),
+                lastLogin: new Date(getSafeValue(user, "activity.lastLogin")).toLocaleDateString()
+            }));
+
+            // Track vertical position
+            let startY = 40;
+
+            // Export each user's data
+            allUserData.forEach((user, index) => {
+                // Add page break if needed (except first user)
+                if (index > 0) {
+                    doc.addPage();
+                    startY = 20;
+                    doc.setPage(index + 1);
+                    doc.setFontSize(12);
+                    doc.text(`User ${index + 1} of ${allUserData.length}`, 105, 15, { align: "center" });
+                }
+
+                // Personal Information Table
+                autoTable(doc, {
+                    head: [["Personal Information", " User " + (index + 1)]],
+                    body: [
+                        ["Full Name", user.name],
+                        ["Email", user.email],
+                        ["Phone", user.phone],
+                        ["User Type", user.userType],
+                        ["Timezone", user.timezone]
+                    ],
+                    startY: startY,
+                    theme: "grid",
+                    headStyles: {
+                        fillColor: [51, 102, 153],
+                        textColor: 255
+                    },
+                    columnStyles: {
+                        0: { fontStyle: "bold", cellWidth: 40 },
+                        1: { cellWidth: "auto" }
+                    }
+                });
+
+                // Account Status Table
+                autoTable(doc, {
+                    head: [["Account Status", ""]],
+                    body: [
+                        ["Status", user.status],
+                        ["Plan", user.plan],
+                        ["Email Verified", user.emailVerified],
+                        ["Blocked", user.blocked]
+                    ],
+                    startY: doc.lastAutoTable.finalY + 10,
+                    theme: "grid",
+                    headStyles: {
+                        fillColor: [51, 102, 153],
+                        textColor: 255
+                    },
+                    columnStyles: {
+                        0: { fontStyle: "bold", cellWidth: 40 },
+                        1: { cellWidth: "auto" }
+                    }
+                });
+
+                // Business Information Table
+                autoTable(doc, {
+                    head: [["Business Information", ""]],
+                    body: [
+                        ["Company Name", user.company],
+                        ["Industry", user.industry],
+                        ["Company Size", user.companySize],
+                        ["Website", user.website]
+                    ],
+                    startY: doc.lastAutoTable.finalY + 10,
+                    theme: "grid",
+                    headStyles: {
+                        fillColor: [51, 102, 153],
+                        textColor: 255
+                    },
+                    columnStyles: {
+                        0: { fontStyle: "bold", cellWidth: 40 },
+                        1: { cellWidth: "auto" }
+                    }
+                });
+
+                // Marketing Profile Table
+                autoTable(doc, {
+                    head: [[`Marketing Profile `, ""]],
+                    body: [
+                        ["Role", user.role],
+                        ["Experience Level", user.experience],
+                        ["Monthly Budget", user.budget]
+                    ],
+                    startY: doc.lastAutoTable.finalY + 10,
+                    theme: "grid",
+                    headStyles: {
+                        fillColor: [51, 102, 153],
+                        textColor: 255
+                    },
+                    columnStyles: {
+                        0: { fontStyle: "bold", cellWidth: 40 },
+                        1: { cellWidth: "auto" }
+                    }
+                });
+
+                // Activity Table
+                autoTable(doc, {
+                    head: [["Activity", ""]],
+                    body: [
+                        ["Join Date", user.joined],
+                        ["Last Login", user.lastLogin]
+                    ],
+                    startY: doc.lastAutoTable.finalY + 10,
+                    theme: "grid",
+                    headStyles: {
+                        fillColor: [51, 102, 153],
+                        textColor: 255
+                    },
+                    columnStyles: {
+                        0: { fontStyle: "bold", cellWidth: 40 },
+                        1: { cellWidth: "auto" }
+                    }
+                });
+
+                // Add footer to each page
+                doc.setFontSize(10);
+                doc.setTextColor(150);
+                doc.text(
+                    `Page ${doc.getNumberOfPages()} of ${Math.ceil(allUserData.length)}`,
+                    doc.internal.pageSize.width - 20,
+                    doc.internal.pageSize.height - 10,
+                    { align: "right" }
+                );
+            });
+
+            // Save the PDF
+            doc.save(`complete_users_export_${new Date().toISOString().slice(0, 10)}.pdf`);
+
+        } catch (error) {
+            console.error('PDF Generation Error:', error);
+            Swal.fire({
+                title: 'Export Failed',
+                text: 'Could not generate complete PDF report.',
+                icon: 'error',
+                confirmButtonColor: '#6366f1'
+            });
+        }
     };
 
     const filteredUsers = users.filter(user => {

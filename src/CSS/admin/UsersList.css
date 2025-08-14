@@ -110,6 +110,7 @@
   padding: clamp(1rem, 3vw, 2rem);
   transition: all var(--ul-transition-normal);
   margin-left: 2rem;
+  margin-top: 2rem;
 }
 
 /* Header Section */
