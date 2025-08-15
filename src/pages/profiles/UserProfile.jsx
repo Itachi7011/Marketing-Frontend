@@ -110,9 +110,9 @@ const ClientProfile = () => {
         try {
             const token = localStorage.getItem('token');
 
-            if (!token) {
-                throw new Error('No authentication token found');
-            }
+            // if (!token) {
+            //     throw new Error('No authentication token found');
+            // }
 
             // Create the payload with the correct structure
             const payload = {
