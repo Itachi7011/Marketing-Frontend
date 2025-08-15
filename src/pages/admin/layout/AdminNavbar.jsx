@@ -16,6 +16,8 @@ import {
     Shield,
     HelpCircle
 } from 'lucide-react';
+import Swal from 'sweetalert2';
+
 
 // Mock theme context - replace with your actual ThemeContext
 
