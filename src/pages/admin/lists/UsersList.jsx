@@ -375,12 +375,26 @@ const UsersList = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentUsers = sortedUsers.slice(startIndex, startIndex + itemsPerPage);
 
+
     const UserCard = ({ user }) => {
         const status = getSafeValue(user, 'status', 'Active');
         const isBlocked = getSafeValue(user, 'isBlocked', false);
         const emailVerified = getSafeValue(user, 'auth.emailVerified', false);
         const lastLogin = getSafeValue(user, 'activity.lastLogin', new Date());
         const createdAt = getSafeValue(user, 'metadata.createdAt', new Date());
+
+const gender = user?.personalInfo?.gender;
+
+const defaultAvatarUrl =
+  gender === 'male'
+    ? 'https://cdn.pixabay.com/photo/2013/07/12/15/24/goaty-149860_960_720.png'
+    : gender === 'female'
+      ? 'https://cdn.pixabay.com/photo/2023/03/31/05/52/avatar-7889246_960_720.jpg'
+      : 'https://cdn.pixabay.com/photo/2016/10/04/14/40/gender-1714479_960_720.jpg';
+
+const avatarUrl = getSafeValue(user, 'personalInfo.avatar.url', defaultAvatarUrl);
+
+
 
         return (
             <div className={`ul-user-card ${isDarkMode ? 'dark' : 'light'}`}>
@@ -396,7 +410,8 @@ const UsersList = () => {
                     </div>
 
                     <div className="ul-user-avatar">
-                        <img src={getSafeValue(user, 'personalInfo.avatar.url', 'https://via.placeholder.com/60')} alt="Avatar" />
+                        <img src={avatarUrl} alt="Avatar" />
+
                         <div className="ul-status-indicator">
                             <i className={`fas fa-circle ul-status-${status.toLowerCase()}`}></i>
                         </div>

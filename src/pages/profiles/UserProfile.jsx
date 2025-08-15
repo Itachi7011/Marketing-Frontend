@@ -55,16 +55,16 @@ const ClientProfile = () => {
     const fetchUserProfile = async () => {
         try {
             setLoading(true);
-            const token = localStorage.getItem('token');
+            // const token = localStorage.getItem('token');
 
-            if (!token) {
-                throw new Error('No authentication token found');
-            }
+            // if (!token) {
+            //     throw new Error('No authentication token found');
+            // }
 
             const response = await fetch('/api/auth/userProfile', {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    // 'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 }
             });

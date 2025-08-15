@@ -111,7 +111,7 @@ const MarketingAISidebar = () => {
         {
             id: 'users',
             title: 'Users',
-            icon: <TrendingUp className="marketing-ai-menu-icon" />,
+            icon: <User className="marketing-ai-menu-icon" />,
             dropdown: [
                 { title: 'Users List', icon: <PieChart className="marketing-ai-submenu-icon" />, href: '/admin/UsersList' },
                 { title: 'Scheduled Demos List', icon: <BarChart3 className="marketing-ai-submenu-icon" />, href: '/admin/ScheduledDemosList' },
@@ -234,8 +234,10 @@ const MarketingAISidebar = () => {
                     </div>
                     {marketingAiSidebarExpanded && (
                         <div className="marketing-ai-admin-info">
-                            <h3 className="marketing-ai-admin-name">John Anderson</h3>
-                            <p className="marketing-ai-admin-role">Marketing Director</p>
+                            <h3 className="marketing-ai-admin-name">{userProfile?.personalInfo?.firstName
+                            }   {userProfile?.personalInfo?.lastName
+                                }</h3>
+                            <p className="marketing-ai-admin-role"> {userProfile?.personalInfo?.userType} </p>
                         </div>
                     )}
                 </div>
