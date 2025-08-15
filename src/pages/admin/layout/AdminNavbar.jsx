@@ -39,6 +39,7 @@ const MarketingAINavbar = () => {
     const fetchUserProfile = async () => {
         try {
             setLoading(true);
+            
             // const token = localStorage.getItem('token');
 
             // if (!token) {

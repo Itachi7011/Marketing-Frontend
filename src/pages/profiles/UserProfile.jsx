@@ -108,7 +108,7 @@ const ClientProfile = () => {
 
     const handleSave = async (section) => {
         try {
-            const token = localStorage.getItem('token');
+            // const token = localStorage.getItem('token');
 
             // if (!token) {
             //     throw new Error('No authentication token found');
@@ -124,7 +124,7 @@ const ClientProfile = () => {
             const response = await fetch('/api/auth/userProfile', {
                 method: 'PUT',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    // 'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
