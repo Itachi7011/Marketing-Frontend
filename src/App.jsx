@@ -61,7 +61,7 @@ function App() {
           <Navbar />
           <AdminNavbar />
           <AdminSidebar />
-          <Routes>
+          <Routes> 
 
             {/* <Route path="/Login" element={<Login />} /> */}
             <Route path="/Signup" element={<Signup />} />
@@ -73,7 +73,7 @@ function App() {
             <Route path="/SearchMarketing" element={<SearchMarketing />} />
             <Route path="/ContentCreation" element={<ContentCreation />} />
             <Route path="/ScheduleDemo" element={<ScheduleDemo />} />
-
+ 
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/ContactUs" element={<ContactUs />} />
 
