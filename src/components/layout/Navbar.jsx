@@ -43,11 +43,11 @@ const PremiumNavbar = () => {
       }
     } catch (error) {
       console.error('Fetch error:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: error.message || 'Failed to load profile data'
-      });
+      // Swal.fire({
+      //   icon: 'error',
+      //   title: 'Error',
+      //   text: error.message || 'Failed to load profile data'
+      // });
     } finally {
       setLoading(false);
     }

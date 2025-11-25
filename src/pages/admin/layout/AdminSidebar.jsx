@@ -74,16 +74,16 @@ const MarketingAISidebar = () => {
 
 
             } else {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Failed to fetch profile');
+                // const errorData = await response.json();
+                // throw new Error(errorData.message || 'Failed to fetch profile');
             }
         } catch (error) {
             console.error('Fetch error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: error.message || 'Failed to load profile data'
-            });
+            // Swal.fire({
+            //     icon: 'error',
+            //     title: 'Error',
+            //     text: error.message || 'Failed to load profile data'
+            // });
         } finally {
             setLoading(false);
         }

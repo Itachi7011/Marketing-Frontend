@@ -5,6 +5,7 @@ import { reducer, initialState } from "./reducers/UseReducer"
 
 
 import './App.css'
+import './CSS/Homepage.css'
 import './CSS/Navbar.css'
 import './CSS/Footer.css'
 import './CSS/Signup.css'
@@ -30,6 +31,7 @@ import Signup from './pages/auth/Signup';
 import EmailVerification from './pages/auth/EmailVerification';
 import Login from './pages/auth/Login';
 import UserProfile from './pages/profiles/UserProfile';
+import Homepage from './pages/Homepage';
 
 import SocialMediaMarketing from './pages/digitalMarketing/SocialMediaMarketing';
 import SearchMarketing from './pages/digitalMarketing/SearchMarketing';
@@ -63,7 +65,7 @@ function App() {
           <AdminSidebar />
           <Routes> 
 
-            {/* <Route path="/Login" element={<Login />} /> */}
+            <Route path="/" element={<Homepage />} />
             <Route path="/Signup" element={<Signup />} />
             <Route path="/EmailVerification" element={<EmailVerification />} />
             <Route path="/Login" element={<Login />} />
@@ -71,13 +73,13 @@ function App() {
 
             <Route path="/SocialMediaMarketing" element={<SocialMediaMarketing />} />
             <Route path="/SearchMarketing" element={<SearchMarketing />} />
-            <Route path="/ContentCreation" element={<ContentCreation />} />
+            <Route path="/ContentCreation" element={<ContentCreation />} /> 
             <Route path="/ScheduleDemo" element={<ScheduleDemo />} />
  
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/ContactUs" element={<ContactUs />} />
-
-            <Route path="/admin/UsersList" element={<UsersList />} />
+ 
+            <Route path="/admin/UsersList" element={<UsersList />} /> 
             <Route path="/admin/ScheduledDemosList" element={<ScheduledDemosList />} />
 
 
