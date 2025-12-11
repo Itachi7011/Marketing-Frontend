@@ -168,6 +168,10 @@
   position: relative;
 }
 
+.marketing-ai-about-container{
+  margin-top: 2rem ;
+}
+
 .marketing-ai-about-container.light .marketing-ai-stats-section {
   background: var(--marketing-ai-light-surface);
 }
@@ -1089,7 +1093,7 @@
 }
 
 .marketing-ai-stat-icon,
-.marketing-ai-feature-icon,
+/* .marketing-ai-feature-icon, */
 .marketing-ai-value-icon {
   animation: marketing-ai-float 3s ease-in-out infinite;
 }

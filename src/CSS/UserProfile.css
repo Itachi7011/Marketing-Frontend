@@ -239,7 +239,7 @@
   display: flex;
   align-items: center;
   /* gap: 0.5rem; */
-  padding: 1rem 1.5rem;
+  padding: 1rem 1rem;
   border: none;
   background: transparent;
   color: var(--cp-text-secondary);
@@ -247,7 +247,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
-  font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+  /* font-size: clamp(0.8rem, 1.5vw, 0.95rem); */
   white-space: nowrap;
   position: relative;
   overflow: hidden;
@@ -272,14 +272,15 @@
 .profile-tab:hover {
   color: var(--cp-text-inverse);
   transform: translateY(-2px);
-  padding-right: 4rem !important;
+  padding-right: 2rem !important;
 }
 
 .profile-tab.active {
   background: var(--cp-gradient-primary);
   color: var(--cp-text-inverse);
   box-shadow: 0 4px 16px var(--cp-shadow-medium);
-  padding-right: 4rem !important;
+  padding-right: 2rem !important;
+  font-size: clamp(0.8rem, 1.5vw, 0.95rem);
 }
 
 .profile-tab.active::before {
@@ -2864,15 +2865,13 @@
   letter-spacing: 0.5px;
 }
 
-.dark .Profile-Timezone-data{
-color: white;
+.dark .Profile-Timezone-data {
+  color: white;
 }
 
-.light .Profile-Timezone-data{
-color: white;
-
+.light .Profile-Timezone-data {
+  color: white;
 }
-
 
 .data-card-value {
   font-size: 0.8rem;
