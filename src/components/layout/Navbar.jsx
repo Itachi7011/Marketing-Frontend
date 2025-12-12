@@ -256,7 +256,7 @@ const PremiumNavbar = () => {
         hasDropdown: false
       }, {
         label: 'Logout',
-        href: '/api/logout',
+        href: '/api/auth/logout',
         hasDropdown: false
       },
 

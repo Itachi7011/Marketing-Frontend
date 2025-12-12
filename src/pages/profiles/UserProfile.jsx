@@ -2158,7 +2158,7 @@ const AIPreferencesTab = ({ data, editing, onEdit, onSave, onCancel, onChange, f
                 </div>
             </div>
 
-            <div className="ai-section">
+            <div className="ai-section automation-settings">
                 <h3>
                     <Settings size={18} style={{ marginRight: '0.5rem' }} />
                     Automation Settings
@@ -2215,7 +2215,7 @@ const AIPreferencesTab = ({ data, editing, onEdit, onSave, onCancel, onChange, f
                 </div>
             </div>
 
-            <div className="ai-section">
+            <div className="ai-section model-preferences">
                 <h3>
                     <Cpu size={18} style={{ marginRight: '0.5rem' }} />
                     Model Preferences

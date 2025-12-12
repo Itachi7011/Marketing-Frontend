@@ -22,7 +22,7 @@ const UsersList = () => {
 
     const UserListDetails = async () => {
         try {
-            const res = await fetch("/api/userList", {
+            const res = await fetch("/api/admin/userList", {
                 method: "GET",
                 headers: {
                     Accept: "application/json",

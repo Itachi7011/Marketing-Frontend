@@ -109,8 +109,9 @@
   min-height: 100vh;
   padding: clamp(1rem, 3vw, 2rem);
   transition: all var(--ul-transition-normal);
-  margin-left: 2rem;
-  margin-top: 2rem;
+  margin-left: 0rem;
+  padding-left: 4rem;
+  margin-top: 4rem;
 }
 
 /* Header Section */

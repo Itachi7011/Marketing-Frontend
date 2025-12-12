@@ -22,7 +22,7 @@ const ScheduleDemosList = () => {
 
     const DemoListDetails = async () => {
         try {
-            const res = await fetch("/api/scheduleDemoList", {
+            const res = await fetch("/api/admin/scheduleDemoList", {
                 method: "GET",
                 headers: {
                     Accept: "application/json",

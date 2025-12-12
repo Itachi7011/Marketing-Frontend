@@ -104,6 +104,7 @@ const PremiumLoginPage = () => {
                 }
             );
             if (response.status === 200) {
+                 localStorage.setItem('userToken', data.token);
                       dispatch({ type: "USER", payload: true });
 
                 await Swal.fire({
